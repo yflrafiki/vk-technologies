@@ -45,7 +45,7 @@ export default function Navbar() {
         <span style={{
           fontFamily: 'var(--font-display)', fontSize: '1.5rem',
           letterSpacing: '0.1em', color: 'var(--text)',
-        }}>TECHNOLOGIES</span>
+        }}> ENGINEERING TECH SOLUTIONS</span>
       </Link>
 
       {/* Desktop Links */}

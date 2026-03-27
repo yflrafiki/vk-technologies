@@ -35,10 +35,10 @@ export default function About() {
             ABOUT <span style={{
               background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            }}>VK TECHNOLOGIES</span>
+            }}>VK Engineering Tech Solutions</span>
           </h1>
           <p style={{ color: 'var(--muted)', fontSize: '1.2rem', lineHeight: 1.9 }}>
-            Founded with a vision to transform Ghana's engineering landscape, VK Technologies has grown into a trusted multi-disciplinary firm delivering excellence in construction, electrical works, security, and more.
+            Founded with a vision to transform Ghana's engineering landscape, VK Engineering Tech Solutions has grown into a trusted multi-disciplinary firm delivering excellence in construction, electrical works, security, and more.
           </p>
         </div>
       </section>
@@ -56,10 +56,10 @@ export default function About() {
               OVER A DECADE OF BUILDING EXCELLENCE
             </h2>
             <p style={{ color: 'var(--muted)', lineHeight: 1.9, marginBottom: '1.2rem', fontSize: '1.05rem' }}>
-              VK Technologies was established with a simple but powerful mission: to provide reliable, high-quality engineering and construction services to individuals, businesses, and institutions across Ghana.
+              VK Engineering Tech Solutions was established with a simple but powerful mission: to provide reliable, high-quality engineering and construction services to individuals, businesses, and institutions across Ghana.
             </p>
             <p style={{ color: 'var(--muted)', lineHeight: 1.9, marginBottom: '1.2rem', fontSize: '1.05rem' }}>
-              From our humble beginnings in Kumasi, we've grown into a comprehensive technology and construction firm with a skilled team capable of handling complex, large-scale projects while maintaining the personal touch our clients appreciate.
+              From our humble beginnings in Accra, we've grown into a comprehensive technology and construction firm with a skilled team capable of handling complex, large-scale projects while maintaining the personal touch our clients appreciate.
             </p>
             <p style={{ color: 'var(--muted)', lineHeight: 1.9, fontSize: '1.05rem' }}>
               Today, we are proud to serve hundreds of satisfied clients with a portfolio spanning residential housing, commercial buildings, industrial facilities, and critical infrastructure.

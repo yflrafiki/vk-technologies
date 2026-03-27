@@ -51,7 +51,7 @@ export default function Footer() {
           {[
             ['📍', 'Accra, Ghana'],
             ['📞', '+233 24 4657 280'],
-            ['✉️', 'info@vktechnologies.com'],
+            ['✉️', 'info@vkengineeringtechsolutions.com'],
             ['🕐', 'Mon – Sat: 8AM – 6PM'],
           ].map(([icon, text]) => (
             <div key={text} style={{ display: 'flex', gap: '0.7rem', marginBottom: '0.7rem' }}>
@@ -69,7 +69,7 @@ export default function Footer() {
         flexWrap: 'wrap', gap: '1rem',
       }}>
         <p style={{ color: 'var(--muted)', fontSize: '0.95rem' }}>
-          © {new Date().getFullYear()} VK Technologies. All rights reserved.
+          © {new Date().getFullYear()} VK Engineering Tech Solutions. All rights reserved.
         </p>
         <p style={{ color: 'var(--muted)', fontSize: '0.95rem' }}>
           Built with precision & passion 🔥

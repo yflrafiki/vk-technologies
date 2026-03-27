@@ -68,7 +68,7 @@ export default function Home() {
             color: 'var(--muted)', fontSize: '1.25rem', maxWidth: 560,
             marginBottom: '2.5rem', lineHeight: 1.8,
           }}>
-            VK Technologies delivers world-class engineering, construction, electrical, and security solutions. We bring expertise, reliability, and innovation to every project.
+            VK Engineering Tech Solutions delivers world-class engineering, construction, electrical, and security solutions. We bring expertise, reliability, and innovation to every project.
           </p>
 
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>

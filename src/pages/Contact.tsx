@@ -36,7 +36,7 @@ export default function Contact() {
               { icon: '🏢', label: 'Address', value: 'CJ 233, Koney Rambo Street, GD - 131 - 8189' },
               { icon: '📞', label: 'Phone', value: '+233 24 4657 280 / +233 54 9266 505' },
               { icon: '💬', label: 'Whatsapp', value: '+233 24 4657 280' },
-              { icon: '✉️', label: 'Email', value: 'info@vktechnologies.com' },
+              { icon: '✉️', label: 'Email', value: 'info@vkengineeringtechsolutions.com' },
               { icon: '🕐', label: 'Working Hours', value: 'Monday – Saturday: 8:00 AM – 6:00 PM' },
             ].map(c => (
               <div key={c.label} style={{ display: 'flex', gap: '1.2rem', alignItems: 'flex-start', marginBottom: '1.8rem' }}>
