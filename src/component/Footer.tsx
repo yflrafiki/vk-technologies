@@ -20,7 +20,7 @@ export default function Footer() {
               fontFamily: 'var(--font-display)', fontSize: '1rem', color: '#000',
             }}>VK</div>
             <span style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', letterSpacing: '0.1em' }}>
-              TECHNOLOGIES
+              ENGINEERING TECH SOLUTIONS
             </span>
           </div>
           <p style={{ color: 'var(--muted)', fontSize: '1.05rem', lineHeight: 1.8 }}>
