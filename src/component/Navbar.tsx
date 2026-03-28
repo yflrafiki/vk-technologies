@@ -24,38 +24,48 @@ export default function Navbar() {
   return (
     <nav style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
-      padding: '0 2rem',
+      padding: 'clamp(0.5rem, 2vw, 2rem)',
       background: scrolled ? 'rgba(10,12,16,0.95)' : 'transparent',
       backdropFilter: scrolled ? 'blur(12px)' : 'none',
       borderBottom: scrolled ? '1px solid var(--border)' : 'none',
       transition: 'var(--transition)',
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      height: '70px',
+      minHeight: '70px',
     }}>
       {/* Logo */}
-      <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+      <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.25rem, 1vw, 0.5rem)' }}>
         <div style={{
-          width: 40, height: 40,
+          width: 'clamp(32px, 8vw, 40px)', 
+          height: 'clamp(32px, 8vw, 40px)',
           background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
           borderRadius: 8,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: 'var(--font-display)', fontSize: '1.2rem', color: '#000',
+          fontFamily: 'var(--font-display)', 
+          fontSize: 'clamp(0.9rem, 2vw, 1.2rem)', 
+          color: '#000',
           fontWeight: 900,
+          flexShrink: 0,
         }}>VK</div>
         <span style={{
-          fontFamily: 'var(--font-display)', fontSize: '1.5rem',
-          letterSpacing: '0.1em', color: 'var(--text)',
-        }}> ENGINEERING TECH SOLUTIONS</span>
+          fontFamily: 'var(--font-display)', 
+          fontSize: 'clamp(0.85rem, 2.5vw, 1.5rem)',
+          letterSpacing: '0.05em', 
+          color: 'var(--text)',
+          display: 'none',
+        }} className="logo-text"> ENGINEERING TECH SOLUTIONS</span>
       </Link>
 
       {/* Desktop Links */}
-      <div style={{ display: 'flex', gap: '2.5rem' }} className="desktop-nav">
+      <div style={{ display: 'flex', gap: 'clamp(1.5rem, 3vw, 2.5rem)' }} className="desktop-nav">
         {links.map(l => (
           <Link key={l.to} to={l.to} style={{
-            fontWeight: 500, fontSize: '1.1rem', letterSpacing: '0.05em',
+            fontWeight: 500, 
+            fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)', 
+            letterSpacing: '0.05em',
             color: location.pathname === l.to ? 'var(--accent)' : 'var(--muted)',
             transition: 'var(--transition)',
             position: 'relative',
+            whiteSpace: 'nowrap',
           }}>
             {l.label}
             {location.pathname === l.to && (
@@ -72,6 +82,7 @@ export default function Navbar() {
       <button onClick={() => setOpen(!open)} aria-label="Menu" style={{
         display: 'none', background: 'none', border: 'none',
         cursor: 'pointer', padding: '0.5rem', color: 'var(--text)',
+        flexShrink: 0,
       }} className="hamburger">
         <div style={{
           width: 24, height: 2, background: open ? 'var(--accent)' : 'var(--text)',
@@ -94,12 +105,19 @@ export default function Navbar() {
         <div style={{
           position: 'fixed', top: 70, left: 0, right: 0,
           background: 'rgba(10,12,16,0.98)', backdropFilter: 'blur(20px)',
-          padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem',
+          padding: 'clamp(1.5rem, 4vw, 2rem)', 
+          display: 'flex', flexDirection: 'column', 
+          gap: 'clamp(1rem, 2vw, 1.5rem)',
           borderBottom: '1px solid var(--border)',
+          maxHeight: 'calc(100vh - 70px)',
+          overflowY: 'auto',
+          zIndex: 999,
         }}>
           {links.map(l => (
             <Link key={l.to} to={l.to} style={{
-              fontSize: '1.4rem', fontFamily: 'var(--font-display)', letterSpacing: '0.1em',
+              fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', 
+              fontFamily: 'var(--font-display)', 
+              letterSpacing: '0.1em',
               color: location.pathname === l.to ? 'var(--accent)' : 'var(--text)',
             }}>{l.label}</Link>
           ))}
@@ -110,6 +128,11 @@ export default function Navbar() {
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .hamburger { display: block !important; }
+          .logo-text { display: none !important; }
+        }
+        
+        @media (min-width: 769px) {
+          .logo-text { display: inline !important; }
         }
       `}</style>
     </nav>

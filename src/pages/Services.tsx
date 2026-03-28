@@ -63,7 +63,7 @@ export default function Services() {
     <main style={{ paddingTop: '70px' }}>
       {/* Hero */}
       <section style={{
-        padding: '6rem 2rem 4rem',
+        padding: 'clamp(4rem, 10vw, 6rem) clamp(1rem, 5vw, 2rem) clamp(3rem, 8vw, 4rem)',
         background: 'linear-gradient(135deg, var(--bg) 0%, var(--surface) 100%)',
         position: 'relative', overflow: 'hidden',
       }}>
@@ -73,30 +73,55 @@ export default function Services() {
           backgroundSize: '60px 60px',
         }} />
         <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
-          <p style={{ color: 'var(--accent)', fontWeight: 600, letterSpacing: '0.2em', fontSize: '0.95rem', marginBottom: '1rem' }}>WHAT WE OFFER</p>
+          <p style={{ 
+            color: 'var(--accent)', fontWeight: 600, letterSpacing: '0.2em', 
+            fontSize: 'clamp(0.8rem, 1.5vw, 0.95rem)', 
+            marginBottom: 'clamp(0.75rem, 1.5vw, 1rem)' 
+          }}>WHAT WE OFFER</p>
           <h1 style={{
-            fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 6vw, 5rem)',
-            letterSpacing: '0.05em', marginBottom: '1.5rem',
+            fontFamily: 'var(--font-display)', 
+            fontSize: 'clamp(2rem, 6vw, 5rem)',
+            letterSpacing: '0.05em', 
+            marginBottom: 'clamp(1rem, 2vw, 1.5rem)',
           }}>
             OUR <span style={{
               background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
             }}>SERVICES</span>
           </h1>
-          <p style={{ color: 'var(--muted)', fontSize: '1.2rem', lineHeight: 1.9 }}>
+          <p style={{ 
+            color: 'var(--muted)', 
+            fontSize: 'clamp(1rem, 1.8vw, 1.2rem)', 
+            lineHeight: 1.9 
+          }}>
             We offer a comprehensive range of engineering, construction, and technology services — all under one roof.
           </p>
         </div>
       </section>
 
       {/* Services Grid */}
-      <section style={{ padding: '5rem 2rem', background: 'var(--bg)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '2rem' }}>
+      <section style={{ 
+        padding: 'clamp(3rem, 8vw, 5rem) clamp(1rem, 5vw, 2rem)',
+        background: 'var(--bg)' 
+      }}>
+        <div style={{ 
+          maxWidth: 1200, 
+          margin: '0 auto', 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(150px, 45vw, 280px), 1fr))',
+          gap: 'clamp(1rem, 2vw, 2rem)' 
+        }}>
           {services.map((s) => (
             <div key={s.title} style={{
-              background: 'var(--surface)', border: '1px solid var(--border)',
-              borderRadius: 'var(--radius)', padding: '2.5rem', overflow: 'hidden',
-              position: 'relative', transition: 'var(--transition)',
+              background: 'var(--surface)', 
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius)', 
+              padding: 'clamp(1rem, 2.5vw, 2.5rem)', 
+              overflow: 'hidden',
+              position: 'relative', 
+              transition: 'var(--transition)',
+              display: 'flex',
+              flexDirection: 'column',
             }}
               onMouseEnter={e => {
                 (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
@@ -110,21 +135,50 @@ export default function Services() {
                 position: 'absolute', top: 0, left: 0, right: 0, height: 3,
                 background: 'linear-gradient(90deg, var(--accent), var(--accent2))',
               }} />
-              <div style={{ width: '100%', height: 180, marginBottom: '1.2rem', overflow: 'hidden', borderRadius: 12 }}>
-                <img src={s.image} alt={s.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ 
+                width: '100%', 
+                height: 'clamp(120px, 30vw, 180px)', 
+                marginBottom: 'clamp(0.75rem, 1.5vw, 1.2rem)', 
+                overflow: 'hidden', 
+                borderRadius: 12 
+              }}>
+                <img src={s.image} alt={s.title} style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover' 
+                }} />
               </div>
               <h2 style={{
-                fontFamily: 'var(--font-display)', fontSize: '1.6rem',
-                letterSpacing: '0.03em', marginBottom: '1rem', lineHeight: 1.2,
-              }}>{s.title}</h2>
-              <p style={{ color: 'var(--muted)', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: '1.5rem' }}>{s.desc}</p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                fontFamily: 'var(--font-display)', 
+                fontSize: 'clamp(1rem, 2vw, 1.6rem)',
+                letterSpacing: '0.03em', 
+                marginBottom: 'clamp(0.5rem, 1.2vw, 1rem)', 
+                lineHeight: 1.2,
+              }}>
+                {s.title}
+              </h2>
+              <p style={{ 
+                color: 'var(--muted)', 
+                fontSize: 'clamp(0.85rem, 1.2vw, 1.05rem)', 
+                lineHeight: 1.6, 
+                marginBottom: 'clamp(0.75rem, 1.5vw, 1.5rem)',
+                flex: 1,
+              }}>
+                {s.desc}
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
                 {s.items.map(item => (
                   <span key={item} style={{
-                    background: 'rgba(240,165,0,0.08)', border: '1px solid var(--border)',
-                    color: 'var(--text)', fontSize: '0.88rem', padding: '0.3rem 0.8rem',
-                    borderRadius: 100, fontWeight: 500,
-                  }}>{item}</span>
+                    background: 'rgba(240,165,0,0.08)', 
+                    border: '1px solid var(--border)',
+                    color: 'var(--text)', 
+                    fontSize: 'clamp(0.7rem, 0.9vw, 0.88rem)', 
+                    padding: 'clamp(0.2rem, 0.3vw, 0.3rem) clamp(0.4rem, 0.8vw, 0.8rem)',
+                    borderRadius: 100, 
+                    fontWeight: 500,
+                  }}>
+                    {item}
+                  </span>
                 ))}
               </div>
             </div>
