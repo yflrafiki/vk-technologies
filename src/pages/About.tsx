@@ -1,8 +1,11 @@
+import { Target, Heart, Lightbulb, CheckCircle } from 'lucide-react';
+import React from 'react';
+
 const values = [
-  { icon: '', title: 'Precision', desc: 'Every project is executed with meticulous attention to detail and engineering accuracy.' },
-  { icon: '', title: 'Integrity', desc: 'We build trust through honest communication, fair pricing, and delivering on promises.' },
-  { icon: '', title: 'Innovation', desc: 'We embrace the latest technologies and methods to deliver modern, effective solutions.' },
-  { icon: '', title: 'Reliability', desc: 'Timely delivery and consistent quality you can count on, every single time.' },
+  { icon: Target, title: 'Precision', desc: 'Every project is executed with meticulous attention to detail and engineering accuracy.' },
+  { icon: Heart, title: 'Integrity', desc: 'We build trust through honest communication, fair pricing, and delivering on promises.' },
+  { icon: Lightbulb, title: 'Innovation', desc: 'We embrace the latest technologies and methods to deliver modern, effective solutions.' },
+  { icon: CheckCircle, title: 'Reliability', desc: 'Timely delivery and consistent quality you can count on, every single time.' },
 ];
 
 export default function About() {
@@ -167,8 +170,8 @@ export default function About() {
                 borderRadius: 'var(--radius)', 
                 padding: 'clamp(1rem, 2vw, 2rem)',
               }}>
-                <div style={{ fontSize: 'clamp(1.8rem, 3vw, 2.5rem)', marginBottom: 'clamp(0.6rem, 1.2vw, 1rem)' }}>
-                  {v.icon}
+                <div style={{ marginBottom: 'clamp(0.6rem, 1.2vw, 1rem)' }}>
+                  {React.createElement(v.icon, { size: 36, strokeWidth: 1.5, color: 'var(--accent)' })}
                 </div>
                 <h3 style={{ 
                   fontFamily: 'var(--font-display)', 

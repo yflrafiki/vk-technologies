@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
+import { MapPin, Building2, Phone, MessageSquare, Mail, Clock } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -130,12 +131,12 @@ export default function Contact() {
             }}>Reach out to us through any of the following channels.</p>
 
             {[
-              { icon: '📍', label: 'Location', value: 'Accra, Greater Accra Region, Ghana' },
-              { icon: '🏢', label: 'Address', value: 'CJ 233, Koney Rambo Street, GD - 131 - 8189' },
-              { icon: '📞', label: 'Phone', value: '+233 24 4657 280 / +233 54 9266 505' },
-              { icon: '💬', label: 'Whatsapp', value: '+233 24 4657 280' },
-              { icon: '✉️', label: 'Email', value: 'info@vkengineeringtechsolutions.com' },
-              { icon: '🕐', label: 'Working Hours', value: 'Monday – Saturday: 8:00 AM – 6:00 PM' },
+              { icon: MapPin, label: 'Location', value: 'Accra, Greater Accra Region, Ghana' },
+              { icon: Building2, label: 'Address', value: 'CJ 233, Koney Rambo Street, GD - 131 - 8189' },
+              { icon: Phone, label: 'Phone', value: '+233 24 4657 280 / +233 54 9266 505' },
+              { icon: MessageSquare, label: 'Whatsapp', value: '+233 24 4657 280' },
+              { icon: Mail, label: 'Email', value: 'info@vkengineeringtechsolutions.com' },
+              { icon: Clock, label: 'Working Hours', value: 'Monday – Saturday: 8:00 AM – 6:00 PM' },
             ].map(c => (
               <div key={c.label} style={{ 
                 display: 'flex', 
@@ -150,10 +151,9 @@ export default function Contact() {
                   borderRadius: 10, 
                   display: 'grid', 
                   placeItems: 'center', 
-                  fontSize: '1.4rem',
                   flexShrink: 0,
                 }}>
-                  {c.icon}
+                  <c.icon size={24} color="var(--accent)" />
                 </div>
                 <div style={{ minWidth: 0 }}>
                   <div style={{ 

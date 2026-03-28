@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import React from 'react';
+import { Wind, Camera, Hammer, Zap, Shield, Home as HomeIcon } from 'lucide-react';
 
 const stats = [
   { value: '10+', label: 'Years Experience' },
@@ -8,12 +10,12 @@ const stats = [
 ];
 
 const highlights = [
-  { icon: '', title: 'Air Conditioning', desc: 'Professional installation, maintenance & repair of all AC systems.' },
-  { icon: '', title: 'CCTV & Security', desc: 'Advanced surveillance solutions to protect what matters most.' },
-  { icon: '', title: 'Construction', desc: 'Full building and civil engineering services from ground up.' },
-  { icon: '', title: 'Electrical Works', desc: 'Complete electrical installations, wiring & power solutions.' },
-  { icon: '', title: 'Security Fencing', desc: 'Perimeter protection with robust, durable fencing systems.' },
-  { icon: '', title: 'Housing', desc: 'Quality residential construction and housing development.' },
+  { icon: Wind, title: 'Air Conditioning', desc: 'Professional installation, maintenance & repair of all AC systems.' },
+  { icon: Camera, title: 'CCTV & Security', desc: 'Advanced surveillance solutions to protect what matters most.' },
+  { icon: Hammer, title: 'Construction', desc: 'Full building and civil engineering services from ground up.' },
+  { icon: Zap, title: 'Electrical Works', desc: 'Complete electrical installations, wiring & power solutions.' },
+  { icon: Shield, title: 'Security Fencing', desc: 'Perimeter protection with robust, durable fencing systems.' },
+  { icon: HomeIcon, title: 'Housing', desc: 'Quality residential construction and housing development.' },
 ];
 
 export default function Home() {
@@ -179,10 +181,9 @@ export default function Home() {
                   (e.currentTarget as HTMLElement).style.transform = 'none';
                 }}>
                 <div style={{ 
-                  fontSize: 'clamp(2rem, 3.5vw, 2.5rem)', 
                   marginBottom: 'clamp(0.75rem, 1.5vw, 1rem)' 
                 }}>
-                  {h.icon}
+                  {React.createElement(h.icon, { size: 36, strokeWidth: 1.5, color: 'var(--accent)' })}
                 </div>
                 <h3 style={{ 
                   fontFamily: 'var(--font-display)', 
