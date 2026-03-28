@@ -161,7 +161,7 @@ export default function Footer() {
           fontSize: 'clamp(0.75rem, 1vw, 0.85rem)',
           whiteSpace: 'nowrap',
         }}>
-          Built with precision & passion 🔥
+          Built with precision & passion
         </p>
       </div>
     </footer>
