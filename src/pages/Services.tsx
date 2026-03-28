@@ -6,6 +6,8 @@ import fencingImg from '../assets/fencing.png';
 import housingImg from '../assets/housing.png';
 import electricalImg from '../assets/electrical.png';
 import energyImg from '../assets/power.png';
+import dstvImg from '../assets/dstv.png'; // placeholder for DSTV
+import androidImg from '../assets/android.png'; // placeholder for Android TV
 
 const services = [
   {
@@ -55,6 +57,18 @@ const services = [
     title: 'Power & Energy Solutions',
     desc: 'We provide complete power infrastructure solutions including solar energy systems, inverters, UPS systems, and backup power to ensure uninterrupted supply.',
     items: ['Solar Panel Systems', 'Inverter Installation', 'UPS Systems', 'Power Factor Correction', 'Transformer Installation', 'Energy Monitoring'],
+  },
+  {
+    image: dstvImg,
+    title: 'DSTV Installation',
+    desc: 'Professional DSTV satellite dish installation and setup for crystal clear TV reception. We handle signal alignment, decoder connection, and multi-room setups.',
+    items: ['Satellite Dish Installation', 'Signal Alignment', 'Decoder Setup', 'Multi-Room Distribution', 'Signal Boosters', 'Maintenance & Repairs'],
+  },
+  {
+    image: androidImg,
+    title: 'Android TV & TV Stick Jailbreaking',
+    desc: 'Unlock the full potential of your Android TV boxes and streaming sticks with custom firmware, app installations, and performance optimizations.',
+    items: ['Custom ROM Installation', 'App Store Unlocking', 'Performance Optimization', 'Kodi Setup', 'VPN Configuration', 'Remote Support'],
   },
 ];
 
