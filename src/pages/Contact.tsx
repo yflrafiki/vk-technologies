@@ -1,4 +1,60 @@
+import { useState, useEffect } from 'react';
+import emailjs from '@emailjs/browser';
+
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: '',
+  });
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  // Initialize EmailJS
+  useEffect(() => {
+    emailjs.init('zPveAVVOft33ATShu'); // Public key from EmailJS
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    // Basic validation
+    if (!formData.name || !formData.email || !formData.message) {
+      setError('Please fill in all required fields (Name, Email, Message)');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await emailjs.send('service_gxl5b6s', 'template_q3lod1m', {
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        message: formData.message,
+        to_email: 'taylorraphael0624@gmail.com',
+      });
+
+      setSubmitted(true);
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setError('Failed to send message. Please try again or call us directly.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main style={{ paddingTop: '70px' }}>
@@ -166,27 +222,210 @@ export default function Contact() {
               letterSpacing: '0.04em', 
               marginBottom: 'clamp(0.75rem, 1.5vw, 1rem)', 
               color: 'var(--accent)' 
-            }}>GET STARTED</h3>
-            <p style={{ 
-              color: 'var(--muted)', 
-              fontSize: 'clamp(0.95rem, 1.3vw, 1.03rem)', 
-              lineHeight: 1.7, 
-              marginBottom: 'clamp(1rem, 2vw, 1.5rem)' 
-            }}>
-              Have a project in mind? Contact VK Technologies now for a free consultation and quote. We can support all stages from design to completion.
-            </p>
-            <ul style={{ 
-              listStyle: 'disc inside', 
-              color: 'var(--text)', 
-              fontSize: 'clamp(0.9rem, 1.2vw, 1.01rem)', 
-              lineHeight: 1.7,
-              paddingLeft: 'clamp(1rem, 2vw, 1.5rem)',
-            }}>
-              <li>Fast response time within business hours</li>
-              <li>Local expertise across Ghana</li>
-              <li>Quality-focused project delivery</li>
-              <li>Transparent estimates and timelines</li>
-            </ul>
+            }}>SEND US A MESSAGE</h3>
+            
+            {submitted && (
+              <div style={{
+                background: 'rgba(240, 165, 0, 0.15)',
+                border: '1px solid var(--accent)',
+                borderRadius: 'var(--radius)',
+                padding: 'clamp(0.75rem, 1.5vw, 1rem)',
+                marginBottom: 'clamp(1rem, 2vw, 1.5rem)',
+                color: 'var(--accent)',
+                fontSize: 'clamp(0.9rem, 1.2vw, 1rem)',
+              }}>
+                ✓ Message sent successfully! We'll get back to you soon.
+              </div>
+            )}
+
+            {error && (
+              <div style={{
+                background: 'rgba(255, 100, 100, 0.15)',
+                border: '1px solid #ff6464',
+                borderRadius: 'var(--radius)',
+                padding: 'clamp(0.75rem, 1.5vw, 1rem)',
+                marginBottom: 'clamp(1rem, 2vw, 1.5rem)',
+                color: '#ff6464',
+                fontSize: 'clamp(0.9rem, 1.2vw, 1rem)',
+              }}>
+                ✕ {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(140px, 45vw, 200px), 1fr))', gap: 'clamp(0.75rem, 1.5vw, 1rem)' }}>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <label style={{
+                    fontSize: 'clamp(0.85rem, 1.1vw, 0.95rem)',
+                    fontWeight: 600,
+                    color: 'var(--accent)',
+                    marginBottom: '0.4rem',
+                  }}>Name *</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your name"
+                    style={{
+                      background: 'var(--surface2)',
+                      border: '1px solid var(--border)',
+                      borderRadius: 'var(--radius)',
+                      padding: 'clamp(0.6rem, 1.2vw, 0.8rem) clamp(0.75rem, 1.5vw, 1rem)',
+                      color: 'var(--text)',
+                      fontSize: 'clamp(0.9rem, 1.2vw, 1rem)',
+                      fontFamily: 'var(--font-body)',
+                      outline: 'none',
+                      transition: 'var(--transition)',
+                    }}
+                    onFocus={(e) => e.currentTarget.style.borderColor = 'var(--accent)'}
+                    onBlur={(e) => e.currentTarget.style.borderColor = 'var(--border)'}
+                  />
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <label style={{
+                    fontSize: 'clamp(0.85rem, 1.1vw, 0.95rem)',
+                    fontWeight: 600,
+                    color: 'var(--accent)',
+                    marginBottom: '0.4rem',
+                  }}>Email *</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="your@email.com"
+                    style={{
+                      background: 'var(--surface2)',
+                      border: '1px solid var(--border)',
+                      borderRadius: 'var(--radius)',
+                      padding: 'clamp(0.6rem, 1.2vw, 0.8rem) clamp(0.75rem, 1.5vw, 1rem)',
+                      color: 'var(--text)',
+                      fontSize: 'clamp(0.9rem, 1.2vw, 1rem)',
+                      fontFamily: 'var(--font-body)',
+                      outline: 'none',
+                      transition: 'var(--transition)',
+                    }}
+                    onFocus={(e) => e.currentTarget.style.borderColor = 'var(--accent)'}
+                    onBlur={(e) => e.currentTarget.style.borderColor = 'var(--border)'}
+                  />
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(140px, 45vw, 200px), 1fr))', gap: 'clamp(0.75rem, 1.5vw, 1rem)' }}>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <label style={{
+                    fontSize: 'clamp(0.85rem, 1.1vw, 0.95rem)',
+                    fontWeight: 600,
+                    color: 'var(--accent)',
+                    marginBottom: '0.4rem',
+                  }}>Phone</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="+233 ..."
+                    style={{
+                      background: 'var(--surface2)',
+                      border: '1px solid var(--border)',
+                      borderRadius: 'var(--radius)',
+                      padding: 'clamp(0.6rem, 1.2vw, 0.8rem) clamp(0.75rem, 1.5vw, 1rem)',
+                      color: 'var(--text)',
+                      fontSize: 'clamp(0.9rem, 1.2vw, 1rem)',
+                      fontFamily: 'var(--font-body)',
+                      outline: 'none',
+                      transition: 'var(--transition)',
+                    }}
+                    onFocus={(e) => e.currentTarget.style.borderColor = 'var(--accent)'}
+                    onBlur={(e) => e.currentTarget.style.borderColor = 'var(--border)'}
+                  />
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <label style={{
+                    fontSize: 'clamp(0.85rem, 1.1vw, 0.95rem)',
+                    fontWeight: 600,
+                    color: 'var(--accent)',
+                    marginBottom: '0.4rem',
+                  }}>Subject</label>
+                  <input
+                    type="text"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    placeholder="Project inquiry"
+                    style={{
+                      background: 'var(--surface2)',
+                      border: '1px solid var(--border)',
+                      borderRadius: 'var(--radius)',
+                      padding: 'clamp(0.6rem, 1.2vw, 0.8rem) clamp(0.75rem, 1.5vw, 1rem)',
+                      color: 'var(--text)',
+                      fontSize: 'clamp(0.9rem, 1.2vw, 1rem)',
+                      fontFamily: 'var(--font-body)',
+                      outline: 'none',
+                      transition: 'var(--transition)',
+                    }}
+                    onFocus={(e) => e.currentTarget.style.borderColor = 'var(--accent)'}
+                    onBlur={(e) => e.currentTarget.style.borderColor = 'var(--border)'}
+                  />
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <label style={{
+                  fontSize: 'clamp(0.85rem, 1.1vw, 0.95rem)',
+                  fontWeight: 600,
+                  color: 'var(--accent)',
+                  marginBottom: '0.4rem',
+                }}>Message *</label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Tell us about your project..."
+                  rows={5}
+                  style={{
+                    background: 'var(--surface2)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 'var(--radius)',
+                    padding: 'clamp(0.6rem, 1.2vw, 0.8rem) clamp(0.75rem, 1.5vw, 1rem)',
+                    color: 'var(--text)',
+                    fontSize: 'clamp(0.9rem, 1.2vw, 1rem)',
+                    fontFamily: 'var(--font-body)',
+                    outline: 'none',
+                    transition: 'var(--transition)',
+                    resize: 'vertical',
+                  }}
+                  onFocus={(e) => e.currentTarget.style.borderColor = 'var(--accent)'}
+                  onBlur={(e) => e.currentTarget.style.borderColor = 'var(--border)'}
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                style={{
+                  background: loading ? 'var(--muted)' : 'linear-gradient(135deg, var(--accent), var(--accent2))',
+                  color: '#000',
+                  fontWeight: 700,
+                  padding: 'clamp(0.7rem, 1.5vw, 0.9rem) clamp(1.5rem, 3vw, 2rem)',
+                  borderRadius: 10,
+                  fontSize: 'clamp(0.9rem, 1.3vw, 1.05rem)',
+                  letterSpacing: '0.08em',
+                  border: 'none',
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                  transition: 'var(--transition)',
+                  opacity: loading ? 0.6 : 1,
+                  width: '100%',
+                }}
+                onMouseEnter={(e) => !loading && (e.currentTarget.style.transform = 'translateY(-2px)')}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = 'none')}
+              >
+                {loading ? 'SENDING...' : 'SEND MESSAGE'}
+              </button>
+            </form>
           </div>
         </div>
       </section>
