@@ -19,7 +19,14 @@ const highlights = [
   { icon: HomeIcon, title: 'Housing', desc: 'Quality residential construction and housing development.' },
 ];
 
-const videos = [
+type VideoItem = {
+  title: string;
+  localSrc?: string;
+  embedUrl?: string;
+  tiktokUrl: string;
+};
+
+const videos: VideoItem[] = [
   {
     title: 'AC Installation Demo',
     localSrc: ac,
@@ -321,7 +328,7 @@ export default function Home() {
                         objectFit: 'cover',
                       }}
                     />
-                  ) : (
+                  ) : video.embedUrl ? (
                     <iframe
                       src={video.embedUrl}
                       style={{
@@ -334,6 +341,17 @@ export default function Home() {
                       allowFullScreen
                       title={video.title}
                     />
+                  ) : (
+                    <div style={{
+                      width: '100%',
+                      height: '100%',
+                      display: 'grid',
+                      placeItems: 'center',
+                      color: 'var(--muted)',
+                      background: 'rgba(0, 0, 0, 0.08)',
+                    }}>
+                      No preview available
+                    </div>
                   )}
                 </div>
                 <a 
