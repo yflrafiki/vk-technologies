@@ -11,6 +11,12 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const getTimeTheme = () => {
+    const hour = new Date().getHours();
+    return hour >= 6 && hour < 18 ? 'light' : 'dark';
+  };
+
+  const [theme, setTheme] = useState<'light' | 'dark'>(getTimeTheme);
   const location = useLocation();
 
   useEffect(() => {
@@ -19,7 +25,18 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => setOpen(false), [location]);
+  useEffect(() => {
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(theme);
+  }, [theme]);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setTheme(getTimeTheme());
+    }, 60_000);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   return (
     <nav style={{
@@ -56,7 +73,7 @@ export default function Navbar() {
       </Link>
 
       {/* Desktop Links */}
-      <div style={{ display: 'flex', gap: 'clamp(1.5rem, 3vw, 2.5rem)' }} className="desktop-nav">
+      <div style={{ display: 'flex', gap: 'clamp(1.5rem, 3vw, 2.5rem)', alignItems: 'center' }} className="desktop-nav">
         {links.map(l => (
           <Link key={l.to} to={l.to} style={{
             fontWeight: 500, 
@@ -114,12 +131,17 @@ export default function Navbar() {
           zIndex: 999,
         }}>
           {links.map(l => (
-            <Link key={l.to} to={l.to} style={{
-              fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', 
-              fontFamily: 'var(--font-display)', 
-              letterSpacing: '0.1em',
-              color: location.pathname === l.to ? 'var(--accent)' : 'var(--text)',
-            }}>{l.label}</Link>
+            <Link
+              key={l.to}
+              to={l.to}
+              onClick={() => setOpen(false)}
+              style={{
+                fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', 
+                fontFamily: 'var(--font-display)', 
+                letterSpacing: '0.1em',
+                color: location.pathname === l.to ? 'var(--accent)' : 'var(--text)',
+              }}
+            >{l.label}</Link>
           ))}
         </div>
       )}

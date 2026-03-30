@@ -8,6 +8,7 @@ export default function Contact() {
     email: '',
     phone: '',
     subject: '',
+    service: '',
     message: '',
   });
   const [submitted, setSubmitted] = useState(false);
@@ -42,12 +43,13 @@ export default function Contact() {
         from_email: formData.email,
         phone: formData.phone,
         subject: formData.subject,
+        service: formData.service,
         message: formData.message,
         to_email: 'taylorraphael0624@gmail.com',
       });
 
       setSubmitted(true);
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', subject: '', service: '', message: '' });
       setTimeout(() => setSubmitted(false), 5000);
     } catch (error) {
       console.error('Form submission error:', error);
@@ -349,13 +351,11 @@ export default function Contact() {
                     fontWeight: 600,
                     color: 'var(--accent)',
                     marginBottom: '0.4rem',
-                  }}>Subject</label>
-                  <input
-                    type="text"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    placeholder="Project inquiry"
+                  }}>Service</label>
+                  <select
+                    name="service"
+                    value={formData.service}
+                    onChange={(e) => setFormData(prev => ({ ...prev, service: e.target.value }))}
                     style={{
                       background: 'var(--surface2)',
                       border: '1px solid var(--border)',
@@ -369,7 +369,16 @@ export default function Contact() {
                     }}
                     onFocus={(e) => e.currentTarget.style.borderColor = 'var(--accent)'}
                     onBlur={(e) => e.currentTarget.style.borderColor = 'var(--border)'}
-                  />
+                  >
+                    <option value="">Select a service...</option>
+                    <option value="AC Installation & Servicing">AC Installation & Servicing</option>
+                    <option value="CCTV & Surveillance">CCTV & Surveillance</option>
+                    <option value="Building & Construction">Building & Construction</option>
+                    <option value="Civil Engineering">Civil Engineering</option>
+                    <option value="Security Fencing">Security Fencing</option>
+                    <option value="Housing Projects">Housing Projects</option>
+                    <option value="Electrical Works">Electrical Works</option>
+                  </select>
                 </div>
               </div>
 

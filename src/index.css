@@ -17,6 +17,32 @@
   --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
 }
 
+.light {
+  --bg: #fafbff;
+  --surface: #ffffff;
+  --surface2: #f7f9ff;
+  --accent: #f0a500;
+  --accent2: #e05c00;
+  --text: #1b253d;
+  --muted: #4d5e7b;
+  --border: rgba(16, 24, 40, 0.15);
+}
+
+.dark {
+  --bg: #0a0c10;
+  --surface: #111520;
+  --surface2: #1a1f2e;
+  --accent: #f0a500;
+  --accent2: #e05c00;
+  --text: #e8eaf0;
+  --muted: #8890a4;
+  --border: rgba(240,165,0,0.15);
+}
+
+html, body {
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
 html { scroll-behavior: smooth; }
 
 body {
