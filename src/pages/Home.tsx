@@ -3,8 +3,8 @@ import React from 'react';
 import { Wind, Camera, Hammer, Zap, Shield, Home as HomeIcon } from 'lucide-react';
 
 const stats = [
-  { value: '10+', label: 'Years Experience' },
-  { value: '500+', label: 'Projects Completed' },
+  { value: '15+', label: 'Years Experience' },
+  { value: '200+', label: 'Projects Completed' },
   { value: '98%', label: 'Client Satisfaction' },
   { value: '50+', label: 'Expert Team Members' },
 ];
