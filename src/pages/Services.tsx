@@ -5,6 +5,7 @@ import civilImg from '../assets/civil.png';
 import fencingImg from '../assets/fencing.png';
 import housingImg from '../assets/housing.png';
 import electricalImg from '../assets/electrical.png';
+import plumbingImg from '../assets/plumb.png';
 import energyImg from '../assets/power.png';
 import dstvImg from '../assets/dstv.png'; // placeholder for DSTV
 import androidImg from '../assets/android.png'; // placeholder for Android TV
@@ -51,6 +52,12 @@ const services = [
     title: 'Electrical Works',
     desc: 'Comprehensive electrical services for all building types. From new installations to upgrades and fault-finding, our certified electricians handle it all safely and efficiently.',
     items: ['Wiring & Rewiring', 'Distribution Boards', 'Solar PV Installation', 'Generator Installation', 'Street Lighting', 'Industrial Electrical Systems'],
+  },
+  {
+    image: plumbingImg,
+    title: 'Plumbing Services',
+    desc: 'Expert plumbing solutions for residential and commercial properties. We handle installations, repairs, and maintenance of water systems, drainage, and fixtures.',
+    items: ['Pipe Installation & Repair', 'Leak Detection & Fixing', 'Water Heater Installation', 'Drainage Systems', 'Bathroom Fixtures', 'Emergency Plumbing'],
   },
   {           
     image: energyImg,
