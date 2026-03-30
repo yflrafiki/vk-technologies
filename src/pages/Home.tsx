@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { Wind, Camera, Hammer, Zap, Shield, Home as HomeIcon } from 'lucide-react';
+import ac from '../assets/vidoe/WhatsApp Video 2026-03-30 at 2.34.33 AM.mp4'
 
 const stats = [
   { value: '15+', label: 'Years Experience' },
@@ -16,6 +17,24 @@ const highlights = [
   { icon: Zap, title: 'Electrical Works', desc: 'Complete electrical installations, wiring & power solutions.' },
   { icon: Shield, title: 'Security Fencing', desc: 'Perimeter protection with robust, durable fencing systems.' },
   { icon: HomeIcon, title: 'Housing', desc: 'Quality residential construction and housing development.' },
+];
+
+const videos = [
+  {
+    title: 'AC Installation Demo',
+    localSrc: ac,
+    tiktokUrl: 'https://vt.tiktok.com/ZSH8jR61Y/', // Replace with actual TikTok URL
+  },
+  {
+    title: 'Construction Project',
+    localSrc: ac,
+    tiktokUrl: 'https://www.tiktok.com/@youraccount/video/0987654321',
+  },
+  {
+    title: 'Electrical Wiring',
+    localSrc: ac,
+    tiktokUrl: 'https://www.tiktok.com/@youraccount/video/1122334455',
+  },
 ];
 
 export default function Home() {
@@ -219,6 +238,131 @@ export default function Home() {
             }}>
               VIEW ALL SERVICES →
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Videos Section */}
+      <section style={{ 
+        padding: 'clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 2rem)',
+        background: 'var(--surface)' 
+      }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div style={{ 
+            textAlign: 'center', 
+            marginBottom: 'clamp(2rem, 5vw, 4rem)' 
+          }}>
+            <p style={{ 
+              color: 'var(--accent)', 
+              fontWeight: 600, 
+              letterSpacing: '0.15em', 
+              fontSize: 'clamp(0.8rem, 1.3vw, 0.95rem)', 
+              marginBottom: '0.5rem' 
+            }}>
+              OUR WORK IN ACTION
+            </p>
+            <h2 style={{
+              fontFamily: 'var(--font-display)', 
+              fontSize: 'clamp(1.5rem, 5vw, 3.5rem)',
+              letterSpacing: '0.05em',
+            }}>
+              FEATURED VIDEOS
+            </h2>
+          </div>
+
+          <div style={{
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(280px, 45vw, 400px), 1fr))',
+            gap: 'clamp(1rem, 2vw, 2rem)',
+          }}>
+            {videos.map((video, i) => (
+              <div key={video.title} style={{
+                background: 'var(--bg)', 
+                border: '1px solid var(--border)',
+                borderRadius: 'var(--radius)', 
+                padding: 'clamp(1rem, 2vw, 1.5rem)',
+                overflow: 'hidden',
+                position: 'relative',
+                transition: 'var(--transition)',
+                animationDelay: `${i * 0.1}s`,
+              }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
+                  (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)';
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)';
+                  (e.currentTarget as HTMLElement).style.transform = 'none';
+                }}>
+                <h3 style={{ 
+                  fontFamily: 'var(--font-display)', 
+                  fontSize: 'clamp(1rem, 1.8vw, 1.3rem)', 
+                  letterSpacing: '0.05em', 
+                  marginBottom: 'clamp(0.75rem, 1.5vw, 1rem)' 
+                }}>
+                  {video.title}
+                </h3>
+                <div style={{
+                  position: 'relative',
+                  width: '100%',
+                  height: 'clamp(200px, 30vw, 250px)',
+                  marginBottom: 'clamp(0.75rem, 1.5vw, 1rem)',
+                  borderRadius: 8,
+                  overflow: 'hidden',
+                  background: 'black',
+                }}>
+                  {video.localSrc ? (
+                    <video
+                      src={video.localSrc}
+                      controls
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  ) : (
+                    <iframe
+                      src={video.embedUrl}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        border: 'none',
+                        borderRadius: 8,
+                      }}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      title={video.title}
+                    />
+                  )}
+                </div>
+                <a 
+                  href={video.tiktokUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{
+                    background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
+                    color: '#000',
+                    fontWeight: 600,
+                    padding: 'clamp(0.5rem, 1vw, 0.7rem) clamp(1rem, 2vw, 1.5rem)',
+                    borderRadius: 8,
+                    fontSize: 'clamp(0.85rem, 1.2vw, 0.95rem)',
+                    letterSpacing: '0.05em',
+                    display: 'inline-block',
+                    textDecoration: 'none',
+                    transition: 'var(--transition)',
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.transform = 'scale(1.05)';
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
+                  }}
+                >
+                  Watch on TikTok →
+                </a>
+              </div>
+            ))}
           </div>
         </div>
       </section>
