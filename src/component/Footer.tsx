@@ -36,7 +36,7 @@ export default function Footer() {
               color: '#000',
               flexShrink: 0,
             }}>
-              VK
+              Ziv
             </div>
             <span style={{ 
               fontFamily: 'var(--font-display)', 
@@ -113,7 +113,7 @@ export default function Footer() {
           {[
             ['📍', 'Accra, Ghana'],
             ['📞', '+233 24 4657 280'],
-            ['✉️', 'info@vkengineeringtechsolutions.com'],
+            ['✉️', 'zivengineeringtechsolutions@gmail.com'],
             ['🕐', 'Mon – Sat: 8AM – 6PM'],
           ].map(([icon, text]) => (
             <div 
@@ -154,7 +154,7 @@ export default function Footer() {
           fontSize: 'clamp(0.75rem, 1vw, 0.85rem)',
           wordBreak: 'break-word',
         }}>
-          © {new Date().getFullYear()} VK Engineering Tech Solutions. All rights reserved.
+          © {new Date().getFullYear()} Ziv Engineering Tech Solutions. All rights reserved.
         </p>
         <p style={{ 
           color: 'var(--muted)', 

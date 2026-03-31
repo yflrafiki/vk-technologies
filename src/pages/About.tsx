@@ -37,14 +37,14 @@ export default function About() {
             ABOUT <span style={{
               background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            }}>VK Engineering Tech Solutions</span>
+            }}>Ziv Engineering Tech Solutions</span>
           </h1>
           <p style={{ 
             color: 'var(--muted)', 
             fontSize: 'clamp(1rem, 1.8vw, 1.2rem)', 
             lineHeight: 1.9  
           }}>
-            Founded with a vision to transform Ghana's engineering landscape, VK Engineering Tech Solutions has grown into a trusted multi-disciplinary firm delivering excellence in construction, electrical works, security, and more.
+            Founded with a vision to transform Ghana's engineering landscape, Ziv Engineering Tech Solutions has grown into a trusted multi-disciplinary firm delivering excellence in construction, electrical works, security, and more.
           </p>
         </div>
       </section>
@@ -81,7 +81,7 @@ export default function About() {
               marginBottom: 'clamp(0.75rem, 1.5vw, 1.2rem)', 
               fontSize: 'clamp(0.9rem, 1.2vw, 1.05rem)' 
             }}>
-              VK Engineering Tech Solutions was established with a simple but powerful mission: to provide reliable, high-quality engineering and construction services to individuals, businesses, and institutions across Ghana.
+              Ziv Engineering Tech Solutions was established with a simple but powerful mission: to provide reliable, high-quality engineering and construction services to individuals, businesses, and institutions across Ghana.
             </p>
             <p style={{ 
               color: 'var(--muted)', 

@@ -105,7 +105,7 @@ export default function Home() {
             marginBottom: 'clamp(1.5rem, 4vw, 2.5rem)', 
             lineHeight: 1.8,
           }}>
-            VK Engineering Tech Solutions delivers world-class engineering, construction, electrical, and security solutions. We bring expertise, reliability, and innovation to every project.
+            Ziv Engineering Tech Solutions delivers world-class engineering, construction, electrical, and security solutions. We bring expertise, reliability, and innovation to every project.
           </p>
 
           <div style={{ display: 'flex', gap: 'clamp(0.75rem, 2vw, 1rem)', flexWrap: 'wrap' }}>

@@ -62,7 +62,7 @@ export default function Navbar() {
           color: '#000',
           fontWeight: 900,
           flexShrink: 0,
-        }}>VK</div>
+        }}>Ziv</div>
         <span style={{
           fontFamily: 'var(--font-display)', 
           fontSize: 'clamp(0.85rem, 2.5vw, 1.5rem)',

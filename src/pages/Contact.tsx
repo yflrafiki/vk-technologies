@@ -137,7 +137,7 @@ export default function Contact() {
               { icon: Building2, label: 'Address', value: 'CJ 233, Koney Rambo Street, GD - 131 - 8189' },
               { icon: Phone, label: 'Phone', value: '+233 24 4657 280 / +233 54 9266 505' },
               { icon: MessageSquare, label: 'Whatsapp', value: '+233 24 4657 280' },
-              { icon: Mail, label: 'Email', value: 'info@vkengineeringtechsolutions.com' },
+              { icon: Mail, label: 'Email', value: 'zivengineeringtechsolutions@gmail.com' },
               { icon: Clock, label: 'Working Hours', value: 'Monday – Saturday: 8:00 AM – 6:00 PM' },
             ].map(c => (
               <div key={c.label} style={{ 
@@ -178,6 +178,34 @@ export default function Contact() {
                 </div>
               </div>
             ))}
+
+            <div style={{ marginTop: 'clamp(1.5rem, 3vw, 2rem)' }}>
+              <p style={{ 
+                fontSize: 'clamp(0.8rem, 1.1vw, 0.9rem)', 
+                color: 'var(--accent)', 
+                fontWeight: 700, 
+                letterSpacing: '0.1em', 
+                marginBottom: 'clamp(0.5rem, 1vw, 0.75rem)' 
+              }}>OUR LOCATION</p>
+              <div style={{
+                width: '100%',
+                minHeight: 240,
+                border: '1px solid var(--border)',
+                borderRadius: 12,
+                overflow: 'hidden',
+                marginBottom: 'clamp(1rem, 2vw, 1.5rem)',
+              }}>
+                <iframe
+                  title="VK Technologies Location"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3977.9672394024455!2d-0.1591646851127419!3d5.638458595041246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9f38a942d63f%3A0x73dc907dea40b8eb!2sAccra%2C%20Greater%20Accra%20Region%2C%20Ghana!5e0!3m2!1sen!2sus!4v0000000000000"
+                  width="100%"
+                  height="240"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+            </div>
 
             <div style={{ marginTop: 'clamp(1.5rem, 3vw, 2rem)' }}>
               <p style={{ 
@@ -378,6 +406,10 @@ export default function Contact() {
                     <option value="Security Fencing">Security Fencing</option>
                     <option value="Housing Projects">Housing Projects</option>
                     <option value="Electrical Works">Electrical Works</option>
+                    <option value="Plumbing Works">Plumbing Works</option>
+                    <option value="Dstv Installation">Dstv Installation</option>
+                    <option value="Power and Energy">Power and Energy</option>
+                    <option value="Android TV & TV Stick Jailbreaking">Android TV & TV Stick Jailbreaking</option>
                   </select>
                 </div>
               </div>
