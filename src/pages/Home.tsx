@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { Wind, Camera, Hammer, Zap, Shield, Home as HomeIcon } from 'lucide-react';
-import ac from '../assets/vidoe/WhatsApp Video 2026-03-30 at 2.34.33 AM.mp4'
+import vid2 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.37.52 PM (1).mp4'
+import vid3 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.37.52 PM (2).mp4'
+import vid4 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.37.52 PM.mp4'
+import vid5 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.38.38 PM.mp4'
 
 const stats = [
   { value: '15+', label: 'Years Experience' },
@@ -28,19 +31,24 @@ type VideoItem = {
 
 const videos: VideoItem[] = [
   {
-    title: 'AC Installation Demo',
-    localSrc: ac,
-    tiktokUrl: 'https://vt.tiktok.com/ZSH8jR61Y/', // Replace with actual TikTok URL
+    title: 'Our Work in Action',
+    localSrc: vid2,
+    tiktokUrl: 'https://www.tiktok.com/@zivengineeringtechsol',
   },
   {
-    title: 'Construction Project',
-    localSrc: ac,
-    tiktokUrl: 'https://www.tiktok.com/@youraccount/video/0987654321',
+    title: 'Project Highlights',
+    localSrc: vid3,
+    tiktokUrl: 'https://www.tiktok.com/@zivengineeringtechsol',
   },
   {
-    title: 'Electrical Wiring',
-    localSrc: ac,
-    tiktokUrl: 'https://www.tiktok.com/@youraccount/video/1122334455',
+    title: 'Engineering Solutions',
+    localSrc: vid4,
+    tiktokUrl: 'https://www.tiktok.com/@zivengineeringtechsol',
+  },
+  {
+    title: 'Latest Projects',
+    localSrc: vid5,
+    tiktokUrl: 'https://www.tiktok.com/@zivengineeringtechsol',
   },
 ];
 
@@ -79,7 +87,7 @@ export default function Home() {
           }}>
             <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)', display: 'inline-block' }} />
             <span style={{ color: 'var(--accent)', fontWeight: 500, letterSpacing: '0.1em' }}>
-              TRUSTED ENGINEERING SOLUTIONS
+              YOUR TRUSTED PARTNER IN MODERN SOLUTIONS
             </span>
           </div>
 
