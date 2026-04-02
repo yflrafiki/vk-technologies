@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { Wind, Camera, Hammer, Zap, Shield, Home as HomeIcon } from 'lucide-react';
-import vid2 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.37.52 PM (1).mp4'
 import vid3 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.37.52 PM (2).mp4'
 import vid4 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.37.52 PM.mp4'
 import vid5 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.38.38 PM.mp4'
@@ -30,11 +29,6 @@ type VideoItem = {
 };
 
 const videos: VideoItem[] = [
-  {
-    title: 'Our Work in Action',
-    localSrc: vid2,
-    tiktokUrl: 'https://www.tiktok.com/@zivengineeringtechsol',
-  },
   {
     title: 'Project Highlights',
     localSrc: vid3,

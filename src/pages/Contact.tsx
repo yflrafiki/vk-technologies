@@ -242,36 +242,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div style={{ marginTop: 'clamp(1.5rem, 3vw, 2rem)' }}>
-              <p style={{ 
-                fontSize: 'clamp(0.8rem, 1.1vw, 0.9rem)', 
-                color: 'var(--accent)', 
-                fontWeight: 700, 
-                letterSpacing: '0.1em', 
-                marginBottom: 'clamp(0.5rem, 1vw, 0.75rem)' 
-              }}>SERVICES WE HANDLE</p>
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-                gap: 'clamp(0.4rem, 1vw, 0.6rem)' 
-              }}>
-                {['Air Conditioning', 'CCTV', 'Construction', 'Civil Engineering', 'Security Fencing', 'Housing', 'Electrical', 'Solar Power'].map(s => (
-                  <span key={s} style={{ 
-                    background: 'rgba(0, 0, 0, 0.2)', 
-                    border: '1px solid var(--border)', 
-                    color: 'var(--text)', 
-                    borderRadius: 8, 
-                    padding: 'clamp(0.4rem, 0.8vw, 0.55rem) clamp(0.6rem, 1vw, 0.8rem)', 
-                    fontSize: 'clamp(0.8rem, 1.2vw, 0.95rem)', 
-                    fontWeight: 600,
-                    textAlign: 'center',
-                    whiteSpace: 'nowrap',
-                  }}>
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </div>
+           
           </div>
 
           <div style={{ 
