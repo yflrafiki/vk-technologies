@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import logo from '../assets/logo.png';
 
 const links = [
   { to: '/', label: 'Home' },
@@ -51,25 +52,16 @@ export default function Navbar() {
     }}>
       {/* Logo */}
       <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.25rem, 1vw, 0.5rem)' }}>
-        <div style={{
-          width: 'clamp(32px, 8vw, 40px)', 
-          height: 'clamp(32px, 8vw, 40px)',
-          background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
-          borderRadius: 8,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: 'var(--font-display)', 
-          fontSize: 'clamp(0.9rem, 2vw, 1.2rem)', 
-          color: '#000',
-          fontWeight: 900,
-          flexShrink: 0,
-        }}>Ziv</div>
-        <span style={{
-          fontFamily: 'var(--font-display)', 
-          fontSize: 'clamp(0.85rem, 2.5vw, 1.5rem)',
-          letterSpacing: '0.05em', 
-          color: 'var(--text)',
-          display: 'none',
-        }} className="logo-text"> ENGINEERING TECH SOLUTIONS</span>
+        <img
+          src={logo}
+          alt="Ziv Engineering Tech Solutions"
+          style={{
+            height: 'clamp(36px, 8vw, 52px)',
+            width: 'auto',
+            objectFit: 'contain',
+            flexShrink: 0,
+          }}
+        />
       </Link>
 
       {/* Desktop Links */}
