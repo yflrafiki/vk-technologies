@@ -4,6 +4,7 @@ import { Wind, Camera, Hammer, Zap, Shield, Home as HomeIcon } from 'lucide-reac
 import vid3 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.37.52 PM (2).mp4'
 import vid4 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.37.52 PM.mp4'
 import vid5 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.38.38 PM.mp4'
+import vid6 from '../assets/vidoe/WhatsApp Video 2026-04-02 at 10.21.45 PM.mp4'
 
 const stats = [
   { value: '15+', label: 'Years Experience' },
@@ -42,6 +43,11 @@ const videos: VideoItem[] = [
   {
     title: 'Latest Projects',
     localSrc: vid5,
+    tiktokUrl: 'https://www.tiktok.com/@zivengineeringtechsol',
+  },
+   {
+    title: 'Latest Projects',
+    localSrc: vid6,
     tiktokUrl: 'https://www.tiktok.com/@zivengineeringtechsol',
   },
 ];
