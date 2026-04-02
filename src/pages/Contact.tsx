@@ -179,6 +179,33 @@ export default function Contact() {
               </div>
             ))}
 
+            {/* TikTok */}
+            <div style={{ display: 'flex', gap: 'clamp(0.75rem, 1.5vw, 1.2rem)', alignItems: 'flex-start', marginBottom: 'clamp(1rem, 2vw, 1.8rem)' }}>
+              <a
+                href="https://www.tiktok.com/@zivengineeringtechsol"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: 'contents' }}
+              >
+                <div style={{ width: 44, height: 44, minWidth: 44, background: 'rgba(240,165,0,0.15)', border: '1px solid var(--border)', borderRadius: 10, display: 'grid', placeItems: 'center', flexShrink: 0 }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--accent)" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
+                  </svg>
+                </div>
+              </a>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontSize: 'clamp(0.85rem, 1.2vw, 0.92rem)', color: 'var(--accent)', fontWeight: 700, marginBottom: '0.2rem' }}>TikTok</div>
+                <a
+                  href="https://www.tiktok.com/@zivengineeringtechsol"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: 'var(--text)', fontSize: 'clamp(0.9rem, 1.3vw, 1.08rem)', lineHeight: 1.5, textDecoration: 'none', wordBreak: 'break-word' }}
+                >
+                  @zivengineeringtechsol
+                </a>
+              </div>
+            </div>
+
             <div style={{ marginTop: 'clamp(1.5rem, 3vw, 2rem)' }}>
               <p style={{ 
                 fontSize: 'clamp(0.8rem, 1.1vw, 0.9rem)', 
@@ -197,10 +224,11 @@ export default function Contact() {
               }}>
                 <iframe
                   title="VK Technologies Location"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3977.9672394024455!2d-0.1591646851127419!3d5.638458595041246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9f38a942d63f%3A0x73dc907dea40b8eb!2sAccra%2C%20Greater%20Accra%20Region%2C%20Ghana!5e0!3m2!1sen!2sus!4v0000000000000"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3969.812296779905!2d-0.14730550000000003!3d5.740148099999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf79000d5a6733%3A0xfc2578783091f213!2sZiv%20Engineering%20Tech%20Solutions!5e0!3m2!1sen!2sgh!4v1775163689423!5m2!1sen!2sgh"
                   width="100%"
                   height="240"
                   style={{ border: 0 }}
+                  allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
