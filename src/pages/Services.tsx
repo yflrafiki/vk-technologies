@@ -1,6 +1,4 @@
-import acImg from '../assets/air.png';
 import cctvImg from '../assets/cctv.png';
-import constructionImg from '../assets/building.png';
 import civilImg from '../assets/civil.png';
 import fencingImg from '../assets/fencing.png';
 import housingImg from '../assets/housing.png';
@@ -9,10 +7,12 @@ import plumbingImg from '../assets/plumb.png';
 import energyImg from '../assets/power.png';
 import dstvImg from '../assets/dstv.png'; // placeholder for DSTV
 import androidImg from '../assets/android.png'; // placeholder for Android TV
+import condition from '../assets/air.jpeg'
+import constr from '../assets/constraction 2.jpeg'
 
 const services = [
   {
-    image: acImg,
+    image: condition,
     title: 'Air Conditioning Installation & Servicing',
     desc: 'We supply, install, and maintain all types of air conditioning systems — split units, cassette ACs, ducted systems, and VRF systems — for homes, offices, and commercial buildings.',
     items: ['Split Unit Installation', 'Ducted AC Systems', 'AC Servicing & Repair', 'Preventive Maintenance', 'Refrigerant Refilling', 'Energy Efficiency Audits'],
@@ -24,7 +24,7 @@ const services = [
     items: ['HD/4K Camera Installation', 'IP Network Cameras', 'DVR/NVR Setup', 'Remote Monitoring', 'Night Vision Systems', 'Access Control Integration'],
   },
   {
-    image: constructionImg,
+    image: constr,
     title: 'Building & Construction',
     desc: 'From concept to completion, we handle full-scale building projects including residential, commercial, and industrial structures with unmatched craftsmanship.',
     items: ['Residential Buildings', 'Commercial Structures', 'Renovations & Extensions', 'Interior Finishing', 'Roofing Works', 'Foundation & Structural Works'],
