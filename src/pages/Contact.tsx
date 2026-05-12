@@ -270,7 +270,7 @@ export default function Contact() {
                 color: 'var(--accent)',
                 fontSize: 'clamp(0.9rem, 1.2vw, 1rem)',
               }}>
-                ✓ Message sent successfully! We'll get back to you soon.
+                ✓ Message sent successfully We'll get back to you soon.
               </div>
             )}
 
