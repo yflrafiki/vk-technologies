@@ -1,0 +1,6 @@
+{
+  "source": "dist",
+  "destination": "dist",
+  "include": ["/", "/about", "/services", "/contact"],
+  "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"]
+}
