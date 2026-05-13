@@ -1,5 +1,17 @@
 import { Target, Heart, Lightbulb, CheckCircle } from 'lucide-react';
-import React from 'react';
+import React, {useEffect} from 'react';
+
+function setCanonicalURL(path: string) {
+  const url = `https://www.zivengsolutions.com${path}`;
+  
+  let canonical = document.querySelector("link[rel='canonical']");
+  if (!canonical) {
+    canonical = document.createElement("link");
+    canonical.setAttribute("rel", "canonical");
+    document.head.appendChild(canonical);
+  }
+  canonical.setAttribute("href", url);
+}
 
 const values = [
   { icon: Target, title: 'Precision', desc: 'Every project is executed with meticulous attention to detail and engineering accuracy.' },
@@ -9,6 +21,9 @@ const values = [
 ];
 
 export default function About() {
+   useEffect(() => {
+      setCanonicalURL('/');
+    }, []);
   return (
     <main style={{ paddingTop: '70px' }}>
       {/* Hero */}

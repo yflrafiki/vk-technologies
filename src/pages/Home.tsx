@@ -1,10 +1,23 @@
 import { Link } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Wind, Camera, Hammer, Zap, Shield, Home as HomeIcon } from 'lucide-react';
 import vid3 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.37.52 PM (2).mp4'
 import vid4 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.37.52 PM.mp4'
 import vid5 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.38.38 PM.mp4'
 import vid6 from '../assets/vidoe/WhatsApp Video 2026-04-02 at 10.21.45 PM.mp4'
+
+// ADD THIS FUNCTION - Canonical URL helper
+function setCanonicalURL(path: string) {
+  const url = `https://www.zivengsolutions.com${path}`;
+  
+  let canonical = document.querySelector("link[rel='canonical']");
+  if (!canonical) {
+    canonical = document.createElement("link");
+    canonical.setAttribute("rel", "canonical");
+    document.head.appendChild(canonical);
+  }
+  canonical.setAttribute("href", url);
+}
 
 const stats = [
   { value: '15+', label: 'Years Experience' },
@@ -53,6 +66,10 @@ const videos: VideoItem[] = [
 ];
 
 export default function Home() {
+    useEffect(() => {
+    setCanonicalURL('/');
+  }, []);
+
   return (
     <main>
       {/* Hero */}

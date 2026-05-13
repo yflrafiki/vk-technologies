@@ -2,7 +2,24 @@ import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { MapPin, Building2, Phone, MessageSquare, Mail, Clock } from 'lucide-react';
 
+function setCanonicalURL(path: string) {
+  const url = `https://www.zivengsolutions.com${path}`;
+  
+  let canonical = document.querySelector("link[rel='canonical']");
+  if (!canonical) {
+    canonical = document.createElement("link");
+    canonical.setAttribute("rel", "canonical");
+    document.head.appendChild(canonical);
+  }
+  canonical.setAttribute("href", url);
+}
+
+
 export default function Contact() {
+   useEffect(() => {
+        setCanonicalURL('/');
+      }, []);
+      
   const [formData, setFormData] = useState({
     name: '',
     email: '',

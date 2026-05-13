@@ -9,6 +9,19 @@ import dstvImg from '../assets/dstv.png'; // placeholder for DSTV
 import androidImg from '../assets/android.png'; // placeholder for Android TV
 import condition from '../assets/air.jpeg'
 import constr from '../assets/constraction 2.jpeg'
+import {useEffect} from 'react';
+
+function setCanonicalURL(path: string) {
+  const url = `https://www.zivengsolutions.com${path}`;
+  
+  let canonical = document.querySelector("link[rel='canonical']");
+  if (!canonical) {
+    canonical = document.createElement("link");
+    canonical.setAttribute("rel", "canonical");
+    document.head.appendChild(canonical);
+  }
+  canonical.setAttribute("href", url);
+}
 
 const services = [
   {
@@ -80,6 +93,10 @@ const services = [
 ];
 
 export default function Services() {
+   useEffect(() => {
+        setCanonicalURL('/');
+      }, []);
+
   return (
     <main style={{ paddingTop: '70px' }}>
       {/* Hero */}
