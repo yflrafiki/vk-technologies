@@ -247,7 +247,7 @@ export default function Contact() {
                 marginBottom: 'clamp(1rem, 2vw, 1.5rem)',
               }}>
                 <iframe
-                  title="VK Technologies Location"
+                  title="Ziv Engineering Tech Solutions Location"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3969.812296779905!2d-0.14730550000000003!3d5.740148099999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf79000d5a6733%3A0xfc2578783091f213!2sZiv%20Engineering%20Tech%20Solutions!5e0!3m2!1sen!2sgh!4v1775163689423!5m2!1sen!2sgh"
                   width="100%"
                   height="240"
