@@ -889,6 +889,9 @@ html.no-motion .gs-reveal { opacity: 1 !important; transform: none !important; f
   pointer-events: none;
   white-space: nowrap;
 }
+.light .footer__watermark {
+  background-image: linear-gradient(180deg, rgba(23, 28, 43, 0.22), rgba(23, 28, 43, 0.03) 90%);
+}
 
 /* page-transition curtain */
 .page-enter { animation: page-in 0.7s var(--ease-out); }
