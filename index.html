@@ -4,7 +4,24 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/src/assets/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
+    <!-- Set the time-of-day theme before first paint to avoid a flash of the wrong background -->
+    <script>
+      (function () {
+        var h = new Date().getHours();
+        var light = h >= 6 && h < 18;
+        var root = document.documentElement;
+        root.classList.add(light ? 'light' : 'dark');
+        root.style.colorScheme = light ? 'light' : 'dark';
+        root.style.backgroundColor = light ? '#f4f1ea' : '#08090d';
+        var meta = document.createElement('meta');
+        meta.name = 'theme-color';
+        meta.content = light ? '#f4f1ea' : '#08090d';
+        document.head.appendChild(meta);
+      })();
+    </script>
+
+
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="DLx1eHgv4LdjC2_Bu8manKJSyL-oWk9X3jWn_lezFXg" />
     

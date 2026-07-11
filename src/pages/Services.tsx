@@ -1,3 +1,9 @@
+import { useEffect } from 'react';
+import { ArrowRight } from 'lucide-react';
+import { setCanonicalURL } from '../utils/canonical';
+import Reveal from '../component/fx/Reveal';
+import TiltCard from '../component/fx/TiltCard';
+import MagneticButton from '../component/fx/Magnetic';
 import cctvImg from '../assets/cctv.png';
 import civilImg from '../assets/civil.png';
 import fencingImg from '../assets/fencing.png';
@@ -5,23 +11,10 @@ import housingImg from '../assets/housing.png';
 import electricalImg from '../assets/electrical.png';
 import plumbingImg from '../assets/plumb.png';
 import energyImg from '../assets/power.png';
-import dstvImg from '../assets/dstv.png'; // placeholder for DSTV
-import androidImg from '../assets/android.png'; // placeholder for Android TV
-import condition from '../assets/air.jpeg'
-import constr from '../assets/constraction 2.jpeg'
-import {useEffect} from 'react';
-
-function setCanonicalURL(path: string) {
-  const url = `https://www.zivengsolutions.com${path}`;
-  
-  let canonical = document.querySelector("link[rel='canonical']");
-  if (!canonical) {
-    canonical = document.createElement("link");
-    canonical.setAttribute("rel", "canonical");
-    document.head.appendChild(canonical);
-  }
-  canonical.setAttribute("href", url);
-}
+import dstvImg from '../assets/dstv.png';
+import androidImg from '../assets/android.png';
+import condition from '../assets/air.jpeg';
+import constr from '../assets/constraction 2.jpeg';
 
 const services = [
   {
@@ -72,7 +65,7 @@ const services = [
     desc: 'Expert plumbing solutions for residential and commercial properties. We handle installations, repairs, and maintenance of water systems, drainage, and fixtures.',
     items: ['Pipe Installation & Repair', 'Leak Detection & Fixing', 'Water Heater Installation', 'Drainage Systems', 'Bathroom Fixtures', 'Emergency Plumbing'],
   },
-  {           
+  {
     image: energyImg,
     title: 'Power & Energy Solutions',
     desc: 'We provide complete power infrastructure solutions including solar energy systems, inverters, UPS systems, and backup power to ensure uninterrupted supply.',
@@ -93,134 +86,70 @@ const services = [
 ];
 
 export default function Services() {
-   useEffect(() => {
-        setCanonicalURL('/');
-      }, []);
+  useEffect(() => { setCanonicalURL('/services'); }, []);
 
   return (
-    <main style={{ paddingTop: '70px' }}>
-      {/* Hero */}
-      <section style={{
-        padding: 'clamp(4rem, 10vw, 6rem) clamp(1rem, 5vw, 2rem) clamp(3rem, 8vw, 4rem)',
-        background: 'linear-gradient(135deg, var(--bg) 0%, var(--surface) 100%)',
-        position: 'relative', overflow: 'hidden',
-      }}>
-        <div style={{
-          position: 'absolute', inset: 0, opacity: 0.03,
-          backgroundImage: `linear-gradient(var(--accent) 1px, transparent 1px), linear-gradient(90deg, var(--accent) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
-        }} />
-        <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
-          <p style={{ 
-            color: 'var(--accent)', fontWeight: 600, letterSpacing: '0.2em', 
-            fontSize: 'clamp(0.8rem, 1.5vw, 0.95rem)', 
-            marginBottom: 'clamp(0.75rem, 1.5vw, 1rem)' 
-          }}>WHAT WE OFFER</p>
-          <h1 style={{
-            fontFamily: 'var(--font-display)', 
-            fontSize: 'clamp(2rem, 6vw, 5rem)',
-            letterSpacing: '0.05em', 
-            marginBottom: 'clamp(1rem, 2vw, 1.5rem)',
-          }}>
-            OUR <span style={{
-              background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            }}>SERVICES</span>
-          </h1>
-          <p style={{ 
-            color: 'var(--muted)', 
-            fontSize: 'clamp(1rem, 1.8vw, 1.2rem)', 
-            lineHeight: 1.9 
-          }}>
-            We offer a comprehensive range of engineering, construction, and technology services — all under one roof.
-          </p>
+    <main className="page-enter" style={{ paddingTop: 76 }}>
+      {/* ============ HERO ============ */}
+      <section className="section" style={{ overflow: 'hidden', paddingBottom: 'clamp(3rem, 6vw, 5rem)' }} aria-labelledby="services-heading">
+        <div className="hero__grid" aria-hidden="true" />
+        <div className="hero__rays" aria-hidden="true" style={{ top: '-45%' }} />
+        <div className="container" style={{ position: 'relative', textAlign: 'center', maxWidth: 860 }}>
+          <Reveal>
+            <span className="tech-label tech-label--center">What we offer</span>
+          </Reveal>
+          <Reveal as="h1" kind="chars" delay={0.12} id="services-heading" className="display display-xl" style={{ margin: 'clamp(0.8rem, 2vw, 1.4rem) 0' }}>
+            PRECISION IN EVERY TRADE
+          </Reveal>
+          <Reveal as="p" delay={0.35} className="lead">
+            Eleven specialized disciplines, one accountable team. Engineering, construction,
+            and technology services — all under one roof.
+          </Reveal>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section style={{ 
-        padding: 'clamp(3rem, 8vw, 5rem) clamp(1rem, 5vw, 2rem)',
-        background: 'var(--bg)' 
-      }}>
-        <div style={{ 
-          maxWidth: 1200, 
-          margin: '0 auto', 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(150px, 45vw, 280px), 1fr))',
-          gap: 'clamp(1rem, 2vw, 2rem)' 
-        }}>
-          {services.map((s) => (
-            <div key={s.title} style={{
-              background: 'var(--surface)', 
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius)', 
-              padding: 'clamp(1rem, 2.5vw, 2.5rem)', 
-              overflow: 'hidden',
-              position: 'relative', 
-              transition: 'var(--transition)',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
-                (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)';
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)';
-                (e.currentTarget as HTMLElement).style.transform = 'none';
-              }}>
-              <div style={{
-                position: 'absolute', top: 0, left: 0, right: 0, height: 3,
-                background: 'linear-gradient(90deg, var(--accent), var(--accent2))',
-              }} />
-              <div style={{ 
-                width: '100%', 
-                height: 'clamp(120px, 30vw, 180px)', 
-                marginBottom: 'clamp(0.75rem, 1.5vw, 1.2rem)', 
-                overflow: 'hidden', 
-                borderRadius: 12 
-              }}>
-                <img src={s.image} alt={s.title} style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover' 
-                }} />
+      {/* ============ SERVICES GRID ============ */}
+      <section className="section" style={{ paddingTop: 'clamp(1rem, 3vw, 2rem)' }}>
+        <div
+          className="container card-grid"
+          style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 'clamp(1.25rem, 2.5vw, 2rem)' }}
+        >
+          {services.map((s, i) => (
+            <TiltCard key={s.title} max={3} style={{ padding: 'clamp(1.1rem, 2vw, 1.6rem)', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ fontFamily: 'var(--font-tech)', fontSize: '0.68rem', letterSpacing: '0.24em', color: 'var(--muted)', marginBottom: '0.9rem' }}>
+                {String(i + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')}
               </div>
-              <h2 style={{
-                fontFamily: 'var(--font-display)', 
-                fontSize: 'clamp(1rem, 2vw, 1.6rem)',
-                letterSpacing: '0.03em', 
-                marginBottom: 'clamp(0.5rem, 1.2vw, 1rem)', 
-                lineHeight: 1.2,
-              }}>
-                {s.title}
-              </h2>
-              <p style={{ 
-                color: 'var(--muted)', 
-                fontSize: 'clamp(0.85rem, 1.2vw, 1.05rem)', 
-                lineHeight: 1.6, 
-                marginBottom: 'clamp(0.75rem, 1.5vw, 1.5rem)',
-                flex: 1,
-              }}>
+              <Reveal kind="mask" delay={(i % 3) * 0.08} style={{ aspectRatio: '16 / 10', marginBottom: '1.2rem' }}>
+                <img src={s.image} alt={s.title} loading="lazy" />
+              </Reveal>
+              <h2 className="display display-sm" style={{ marginBottom: '0.6rem' }}>{s.title}</h2>
+              <p style={{ color: 'var(--muted)', fontSize: '0.93rem', lineHeight: 1.65, marginBottom: '1.1rem', flex: 1 }}>
                 {s.desc}
               </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
                 {s.items.map(item => (
-                  <span key={item} style={{
-                    background: 'rgba(240,165,0,0.08)', 
-                    border: '1px solid var(--border)',
-                    color: 'var(--text)', 
-                    fontSize: 'clamp(0.7rem, 0.9vw, 0.88rem)', 
-                    padding: 'clamp(0.2rem, 0.3vw, 0.3rem) clamp(0.4rem, 0.8vw, 0.8rem)',
-                    borderRadius: 100, 
-                    fontWeight: 500,
-                  }}>
-                    {item}
-                  </span>
+                  <span key={item} className="chip">{item}</span>
                 ))}
               </div>
-            </div>
+            </TiltCard>
           ))}
+        </div>
+      </section>
+
+      {/* ============ CTA ============ */}
+      <section className="section" style={{ background: 'var(--bg-raised)', textAlign: 'center' }} aria-labelledby="services-cta">
+        <div className="container" style={{ maxWidth: 760 }}>
+          <Reveal as="h2" kind="chars" id="services-cta" className="display display-lg" style={{ marginBottom: '1rem' }}>
+            NEED SOMETHING SPECIFIC?
+          </Reveal>
+          <Reveal as="p" delay={0.15} className="lead" style={{ marginBottom: '2.2rem' }}>
+            Every project is different. Tell us what you're building and we'll scope it with you.
+          </Reveal>
+          <Reveal delay={0.3}>
+            <MagneticButton to="/contact" variant="forge">
+              Request a Quote <ArrowRight size={16} aria-hidden="true" />
+            </MagneticButton>
+          </Reveal>
         </div>
       </section>
     </main>

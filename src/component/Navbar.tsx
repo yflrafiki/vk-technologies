@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
@@ -9,21 +9,38 @@ const links = [
   { to: '/contact', label: 'Contact' },
 ];
 
+const getTimeTheme = () => {
+  const hour = new Date().getHours();
+  return hour >= 6 && hour < 18 ? 'light' : 'dark';
+};
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
-  const getTimeTheme = () => {
-    const hour = new Date().getHours();
-    return hour >= 6 && hour < 18 ? 'light' : 'dark';
-  };
-
   const [theme, setTheme] = useState<'light' | 'dark'>(getTimeTheme);
+  const lastY = useRef(0);
   const location = useLocation();
 
+  // blur-on-scroll + hide on scroll down / reveal on scroll up
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        setScrolled(y > 24);
+        const delta = y - lastY.current;
+        if (y > 140 && delta > 4) setHidden(true);
+        else if (delta < -4 || y <= 140) setHidden(false);
+        lastY.current = y;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   useEffect(() => {
@@ -32,123 +49,63 @@ export default function Navbar() {
   }, [theme]);
 
   useEffect(() => {
-    const interval = window.setInterval(() => {
-      setTheme(getTimeTheme());
-    }, 60_000);
-
+    const interval = window.setInterval(() => setTheme(getTimeTheme()), 60_000);
     return () => window.clearInterval(interval);
   }, []);
 
+  // lock body scroll while the mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
+
   return (
-    <nav style={{
-      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
-      padding: 'clamp(0.5rem, 2vw, 2rem)',
-      background: scrolled ? 'rgba(10,12,16,0.95)' : 'transparent',
-      backdropFilter: scrolled ? 'blur(12px)' : 'none',
-      borderBottom: scrolled ? '1px solid var(--border)' : 'none',
-      transition: 'var(--transition)',
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      minHeight: '70px',
-    }}>
-      {/* Logo */}
-      <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.25rem, 1vw, 0.5rem)' }}>
-        <img
-          src={logo}
-          alt="Ziv Engineering Tech Solutions"
-          style={{
-            height: 'clamp(36px, 8vw, 52px)',
-            width: 'auto',
-            objectFit: 'contain',
-            flexShrink: 0,
-          }}
-        />
-      </Link>
+    <>
+      <nav
+        className={`nav ${scrolled ? 'nav--scrolled' : ''} ${hidden && !open ? 'nav--hidden' : ''}`}
+        aria-label="Main navigation"
+      >
+        <Link to="/" className="nav__logo" aria-label="Ziv Engineering Tech Solutions — home">
+          <img src={logo} alt="Ziv Engineering Tech Solutions" />
+        </Link>
 
-      {/* Desktop Links */}
-      <div style={{ display: 'flex', gap: 'clamp(1.5rem, 3vw, 2.5rem)', alignItems: 'center' }} className="desktop-nav">
-        {links.map(l => (
-          <Link key={l.to} to={l.to} style={{
-            fontWeight: 500, 
-            fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)', 
-            letterSpacing: '0.05em',
-            color: location.pathname === l.to ? 'var(--accent)' : 'var(--muted)',
-            transition: 'var(--transition)',
-            position: 'relative',
-            whiteSpace: 'nowrap',
-          }}>
-            {l.label}
-            {location.pathname === l.to && (
-              <span style={{
-                position: 'absolute', bottom: -4, left: 0, right: 0,
-                height: 2, background: 'var(--accent)', borderRadius: 2,
-              }} />
-            )}
-          </Link>
-        ))}
-      </div>
-
-      {/* Hamburger */}
-      <button onClick={() => setOpen(!open)} aria-label="Menu" style={{
-        display: 'none', background: 'none', border: 'none',
-        cursor: 'pointer', padding: '0.5rem', color: 'var(--text)',
-        flexShrink: 0,
-      }} className="hamburger">
-        <div style={{
-          width: 24, height: 2, background: open ? 'var(--accent)' : 'var(--text)',
-          transition: 'var(--transition)',
-          transform: open ? 'rotate(45deg) translateY(8px)' : 'none',
-        }} />
-        <div style={{
-          width: 24, height: 2, background: 'var(--text)', margin: '5px 0',
-          opacity: open ? 0 : 1, transition: 'var(--transition)',
-        }} />
-        <div style={{
-          width: 24, height: 2, background: open ? 'var(--accent)' : 'var(--text)',
-          transition: 'var(--transition)',
-          transform: open ? 'rotate(-45deg) translateY(-8px)' : 'none',
-        }} />
-      </button>
-
-      {/* Mobile Menu */}
-      {open && (
-        <div style={{
-          position: 'fixed', top: 70, left: 0, right: 0,
-          background: 'rgba(10,12,16,0.98)', backdropFilter: 'blur(20px)',
-          padding: 'clamp(1.5rem, 4vw, 2rem)', 
-          display: 'flex', flexDirection: 'column', 
-          gap: 'clamp(1rem, 2vw, 1.5rem)',
-          borderBottom: '1px solid var(--border)',
-          maxHeight: 'calc(100vh - 70px)',
-          overflowY: 'auto',
-          zIndex: 999,
-        }}>
+        <div className="nav__links">
           {links.map(l => (
             <Link
               key={l.to}
               to={l.to}
-              onClick={() => setOpen(false)}
-              style={{
-                fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', 
-                fontFamily: 'var(--font-display)', 
-                letterSpacing: '0.1em',
-                color: location.pathname === l.to ? 'var(--accent)' : 'var(--text)',
-              }}
-            >{l.label}</Link>
+              className={`nav__link ${location.pathname === l.to ? 'nav__link--active' : ''}`}
+              aria-current={location.pathname === l.to ? 'page' : undefined}
+            >
+              {l.label}
+            </Link>
           ))}
         </div>
-      )}
 
-      <style>{`
-        @media (max-width: 768px) {
-          .desktop-nav { display: none !important; }
-          .hamburger { display: block !important; }
-          .logo-text { display: none !important; }
-        }
-        
-        @media (min-width: 769px) {
-          .logo-text { display: inline !important; }
-        }
-      `}</style>
-    </nav>
+        <button
+          className="nav__burger"
+          onClick={() => setOpen(o => !o)}
+          aria-expanded={open}
+          aria-label={open ? 'Close menu' : 'Open menu'}
+        >
+          <span /><span /><span />
+        </button>
+      </nav>
+
+      <div className={`nav__mobile ${open ? 'nav__mobile--open' : ''}`} aria-hidden={!open}>
+        {links.map((l, i) => (
+          <Link
+            key={l.to}
+            to={l.to}
+            className={`nav__mobile-link ${location.pathname === l.to ? 'nav__mobile-link--active' : ''}`}
+            onClick={() => setOpen(false)}
+            tabIndex={open ? 0 : -1}
+          >
+            <span className="idx">0{i + 1}</span>
+            {l.label}
+          </Link>
+        ))}
+      </div>
+    </>
   );
 }

@@ -1,29 +1,20 @@
-import { Link } from 'react-router-dom';
-import React, { useEffect } from 'react';
-import { Wind, Camera, Hammer, Zap, Shield, Home as HomeIcon } from 'lucide-react';
-import vid3 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.37.52 PM (2).mp4'
-import vid4 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.37.52 PM.mp4'
-import vid5 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.38.38 PM.mp4'
-import vid6 from '../assets/vidoe/WhatsApp Video 2026-04-02 at 10.21.45 PM.mp4'
-
-// ADD THIS FUNCTION - Canonical URL helper
-function setCanonicalURL(path: string) {
-  const url = `https://www.zivengsolutions.com${path}`;
-  
-  let canonical = document.querySelector("link[rel='canonical']");
-  if (!canonical) {
-    canonical = document.createElement("link");
-    canonical.setAttribute("rel", "canonical");
-    document.head.appendChild(canonical);
-  }
-  canonical.setAttribute("href", url);
-}
+import { useEffect, useRef } from 'react';
+import { Wind, Camera, Hammer, Zap, Shield, Home as HomeIcon, ArrowRight, PhoneCall } from 'lucide-react';
+import { setCanonicalURL } from '../utils/canonical';
+import { gsap, prefersReducedMotion } from '../lib/motion';
+import Reveal from '../component/fx/Reveal';
+import TiltCard from '../component/fx/TiltCard';
+import MagneticButton from '../component/fx/Magnetic';
+import vid3 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.37.52 PM (2).mp4';
+import vid4 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.37.52 PM.mp4';
+import vid5 from '../assets/vidoe/WhatsApp Video 2026-03-31 at 11.38.38 PM.mp4';
+import vid6 from '../assets/vidoe/WhatsApp Video 2026-04-02 at 10.21.45 PM.mp4';
 
 const stats = [
-  { value: '15+', label: 'Years Experience' },
-  { value: '200+', label: 'Projects Completed' },
-  { value: '98%', label: 'Client Satisfaction' },
-  { value: '50+', label: 'Expert Team Members' },
+  { value: 15, suffix: '+', label: 'Years Experience' },
+  { value: 200, suffix: '+', label: 'Projects Completed' },
+  { value: 98, suffix: '%', label: 'Client Satisfaction' },
+  { value: 50, suffix: '+', label: 'Expert Team Members' },
 ];
 
 const highlights = [
@@ -35,417 +26,253 @@ const highlights = [
   { icon: HomeIcon, title: 'Housing', desc: 'Quality residential construction and housing development.' },
 ];
 
-type VideoItem = {
-  title: string;
-  localSrc?: string;
-  embedUrl?: string;
-  tiktokUrl: string;
-};
-
-const videos: VideoItem[] = [
-  {
-    title: 'Project Highlights',
-    localSrc: vid3,
-    tiktokUrl: 'https://www.tiktok.com/@zivengineeringtechsol',
-  },
-  {
-    title: 'Engineering Solutions',
-    localSrc: vid4,
-    tiktokUrl: 'https://www.tiktok.com/@zivengineeringtechsol',
-  },
-  {
-    title: 'Latest Projects',
-    localSrc: vid5,
-    tiktokUrl: 'https://www.tiktok.com/@zivengineeringtechsol',
-  },
-   {
-    title: 'Latest Projects',
-    localSrc: vid6,
-    tiktokUrl: 'https://www.tiktok.com/@zivengineeringtechsol',
-  },
+const marqueeItems = [
+  'Air Conditioning', 'CCTV & Surveillance', 'Construction', 'Civil Engineering',
+  'Electrical Works', 'Security Fencing', 'Housing', 'Plumbing', 'Solar & Power',
 ];
 
+const videos = [
+  { title: 'Project Highlights', src: vid3 },
+  { title: 'Engineering Solutions', src: vid4 },
+  { title: 'Latest Projects', src: vid5 },
+  { title: 'On-Site Craftsmanship', src: vid6 },
+];
+
+const TIKTOK = 'https://www.tiktok.com/@zivengineeringtechsol';
+
 export default function Home() {
-    useEffect(() => {
-    setCanonicalURL('/');
+  const heroRef = useRef<HTMLElement>(null);
+  const heroInnerRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => { setCanonicalURL('/'); }, []);
+
+  // mouse parallax: normalized cursor position drives CSS vars on the hero
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero || prefersReducedMotion() || !window.matchMedia('(hover: hover)').matches) return;
+
+    let raf = 0;
+    const onMove = (e: MouseEvent) => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const r = hero.getBoundingClientRect();
+        hero.style.setProperty('--mx', (((e.clientX - r.left) / r.width) * 2 - 1).toFixed(3));
+        hero.style.setProperty('--my', (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(3));
+      });
+    };
+    hero.addEventListener('mousemove', onMove);
+    return () => {
+      hero.removeEventListener('mousemove', onMove);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  // pinned zoom-away: hero content scales down + blurs as you scroll past
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    const ctx = gsap.context(() => {
+      gsap.to(heroInnerRef.current, {
+        scale: 0.92,
+        opacity: 0.25,
+        filter: 'blur(6px)',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom 30%',
+          scrub: 0.6,
+        },
+      });
+      // counters
+      const nums = statsRef.current?.querySelectorAll<HTMLElement>('[data-count]') ?? [];
+      nums.forEach(el => {
+        const target = Number(el.dataset.count);
+        const counter = { v: 0 };
+        gsap.to(counter, {
+          v: target,
+          duration: 2,
+          ease: 'expo.out',
+          scrollTrigger: { trigger: el, start: 'top 92%', once: true },
+          onUpdate: () => { el.textContent = String(Math.round(counter.v)); },
+        });
+      });
+    }, heroRef);
+    return () => ctx.revert();
   }, []);
 
   return (
-    <main>
-      {/* Hero */}
-      <section style={{
-        minHeight: '100vh', display: 'flex', alignItems: 'center',
-        position: 'relative', overflow: 'hidden',
-        background: 'linear-gradient(135deg, var(--bg) 0%, var(--surface) 100%)',
-        padding: 'clamp(5rem, 15vw, 7rem) clamp(1rem, 5vw, 2rem) clamp(3rem, 8vw, 4rem)',
-      }}>
-        {/* Background grid */}
-        <div style={{
-          position: 'absolute', inset: 0, opacity: 0.04,
-          backgroundImage: `linear-gradient(var(--accent) 1px, transparent 1px), linear-gradient(90deg, var(--accent) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
-        }} />
-        {/* Glow */}
-        <div style={{
-          position: 'absolute', top: '20%', right: '-10%',
-          width: 'clamp(300px, 50vw, 600px)', 
-          height: 'clamp(300px, 50vw, 600px)', 
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(240,165,0,0.08) 0%, transparent 70%)',
-        }} />
+    <main className="page-enter">
+      {/* ============ HERO ============ */}
+      <section ref={heroRef} className="hero" aria-label="Introduction">
+        <div className="hero__grid" aria-hidden="true" />
+        <div className="parallax-layer parallax parallax--1" aria-hidden="true">
+          <div className="hero__rays" />
+        </div>
+        <div className="parallax-layer parallax parallax--2" aria-hidden="true">
+          <div className="hero__glow" />
+        </div>
 
-        <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1, width: '100%' }}>
-          <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-            background: 'rgba(240,165,0,0.1)', border: '1px solid var(--border)',
-            borderRadius: 100, padding: 'clamp(0.3rem, 1vw, 0.4rem) clamp(0.8rem, 2vw, 1.2rem)', 
-            marginBottom: 'clamp(1rem, 3vw, 2rem)',
-            fontSize: 'clamp(0.8rem, 1.5vw, 0.95rem)',
-          }}>
-            <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)', display: 'inline-block' }} />
-            <span style={{ color: 'var(--accent)', fontWeight: 500, letterSpacing: '0.1em' }}>
-              YOUR TRUSTED PARTNER IN MODERN SOLUTIONS
+        <div className="hero__objects" aria-hidden="true">
+          <div className="parallax-layer parallax parallax--2">
+            <div className="float-obj obj-ring" />
+          </div>
+          <div className="parallax-layer parallax parallax--3">
+            <div className="float-obj obj-hex" />
+            <div className="float-obj obj-cube">
+              <i /><i /><i /><i /><i /><i />
+            </div>
+          </div>
+          <div className="parallax-layer parallax parallax--1">
+            <div className="float-obj obj-beam" />
+          </div>
+        </div>
+
+        <div ref={heroInnerRef} className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
+          <Reveal delay={0.1}>
+            <span className="badge-live">
+              <span className="dot" aria-hidden="true" />
+              Your trusted partner in modern solutions
             </span>
-          </div>
+          </Reveal>
 
-          <h1 style={{
-            fontFamily: 'var(--font-display)', 
-            fontSize: 'clamp(2rem, 8vw, 7rem)',
-            lineHeight: 1, letterSpacing: '0.02em', 
-            marginBottom: 'clamp(1rem, 3vw, 1.5rem)',
-            maxWidth: 800,
-          }}>
-            BUILDING GHANA'S{' '}
-            <span style={{
-              background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            }}>FUTURE</span>{' '}
-            ONE PROJECT AT A TIME
-          </h1>
+          <Reveal as="h1" kind="chars" delay={0.2} className="display display-xl" style={{ maxWidth: 900, margin: 'clamp(1.2rem, 3vw, 2rem) 0' }}>
+            BUILDING GHANA'S FUTURE ONE PROJECT AT A TIME
+          </Reveal>
 
-          <p style={{
-            color: 'var(--muted)', 
-            fontSize: 'clamp(1rem, 2vw, 1.25rem)', 
-            maxWidth: 560,
-            marginBottom: 'clamp(1.5rem, 4vw, 2.5rem)', 
-            lineHeight: 1.8,
-          }}>
-            Ziv Engineering Tech Solutions delivers world-class engineering, construction, electrical, and security solutions. We bring expertise, reliability, and innovation to every project.
-          </p>
+          <Reveal as="p" delay={0.45} className="lead" style={{ maxWidth: 560, marginBottom: 'clamp(1.8rem, 4vw, 2.6rem)' }}>
+            Ziv Engineering Tech Solutions delivers world-class engineering, construction,
+            electrical, and security solutions — expertise, reliability, and innovation on every site.
+          </Reveal>
 
-          <div style={{ display: 'flex', gap: 'clamp(0.75rem, 2vw, 1rem)', flexWrap: 'wrap' }}>
-            <Link to="/services" style={{
-              background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
-              color: '#000', fontWeight: 700, padding: 'clamp(0.7rem, 1.5vw, 0.9rem) clamp(1.5rem, 3vw, 2rem)',
-              borderRadius: 10, fontSize: 'clamp(0.9rem, 1.5vw, 1.05rem)', letterSpacing: '0.08em',
-              display: 'inline-block',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'var(--transition)',
-            }}>EXPLORE SERVICES</Link>
-          </div>
+          <Reveal delay={0.6} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <MagneticButton to="/services" variant="forge">
+              Explore Services <ArrowRight size={16} aria-hidden="true" />
+            </MagneticButton>
+            <MagneticButton to="/contact" variant="ghost">
+              <PhoneCall size={15} aria-hidden="true" /> Talk to Us
+            </MagneticButton>
+          </Reveal>
 
-          {/* Stats */}
-          <div style={{
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(100px, 20vw, 150px), 1fr))',
-            gap: 'clamp(1rem, 2vw, 1.5rem)', 
-            marginTop: 'clamp(3rem, 8vw, 5rem)', 
-            maxWidth: 700,
-          }}>
-            {stats.map(s => (
-              <div key={s.label} style={{
-                borderLeft: '2px solid var(--accent)', 
-                paddingLeft: 'clamp(0.75rem, 1.5vw, 1rem)',
-              }}>
-                <div style={{
-                  fontFamily: 'var(--font-display)', 
-                  fontSize: 'clamp(1.6rem, 3vw, 2.2rem)',
-                  color: 'var(--accent)', 
-                  lineHeight: 1,
-                }}>
-                  {s.value}
-                </div>
-                <div style={{ 
-                  color: 'var(--muted)', 
-                  fontSize: 'clamp(0.75rem, 1.2vw, 0.95rem)', 
-                  marginTop: '0.3rem',
-                  whiteSpace: 'nowrap',
-                }}>
-                  {s.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Highlights */}
-      <section style={{ 
-        padding: 'clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 2rem)',
-        background: 'var(--bg)' 
-      }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ 
-            textAlign: 'center', 
-            marginBottom: 'clamp(2rem, 5vw, 4rem)' 
-          }}>
-            <p style={{ 
-              color: 'var(--accent)', 
-              fontWeight: 600, 
-              letterSpacing: '0.15em', 
-              fontSize: 'clamp(0.8rem, 1.3vw, 0.95rem)', 
-              marginBottom: '0.5rem' 
-            }}>
-              WHAT WE DO
-            </p>
-            <h2 style={{
-              fontFamily: 'var(--font-display)', 
-              fontSize: 'clamp(1.5rem, 5vw, 3.5rem)',
-              letterSpacing: '0.05em',
-            }}>
-              OUR CORE SERVICES
-            </h2>
-          </div>
-
-          <div style={{
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(140px, 45vw, 280px), 1fr))',
-            gap: 'clamp(1rem, 2vw, 1.5rem)',
-          }}>
-            {highlights.map((h, i) => (
-              <div key={h.title} style={{
-                background: 'var(--surface)', 
-                border: '1px solid var(--border)',
-                borderRadius: 'var(--radius)', 
-                padding: 'clamp(1.25rem, 2.5vw, 2rem)',
-                transition: 'var(--transition)', 
-                cursor: 'default',
-                animationDelay: `${i * 0.1}s`,
+          <Reveal delay={0.75}>
+            <div
+              ref={statsRef}
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(110px, 20vw, 150px), 1fr))',
+                gap: 'var(--gap)',
+                marginTop: 'clamp(3rem, 7vw, 4.5rem)',
+                maxWidth: 720,
               }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
-                  (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)';
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)';
-                  (e.currentTarget as HTMLElement).style.transform = 'none';
-                }}>
-                <div style={{ 
-                  marginBottom: 'clamp(0.75rem, 1.5vw, 1rem)' 
-                }}>
-                  {React.createElement(h.icon, { size: 36, strokeWidth: 1.5, color: 'var(--accent)' })}
+            >
+              {stats.map(s => (
+                <div key={s.label} className="stat-block">
+                  <div className="num text-steel">
+                    <span data-count={s.value}>{s.value}</span>{s.suffix}
+                  </div>
+                  <div className="lbl">{s.label}</div>
                 </div>
-                <h3 style={{ 
-                  fontFamily: 'var(--font-display)', 
-                  fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', 
-                  letterSpacing: '0.05em', 
-                  marginBottom: 'clamp(0.4rem, 0.8vw, 0.6rem)' 
-                }}>
-                  {h.title}
-                </h3>
-                <p style={{ 
-                  color: 'var(--muted)', 
-                  fontSize: 'clamp(0.9rem, 1.3vw, 1.05rem)', 
-                  lineHeight: 1.7 
-                }}>
-                  {h.desc}
-                </p>
-              </div>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+
+        <div className="scroll-hint" aria-hidden="true">Scroll</div>
+      </section>
+
+      {/* ============ MARQUEE ============ */}
+      <div className="marquee" aria-hidden="true">
+        {[0, 1].map(t => (
+          <div key={t} className="marquee__track">
+            {marqueeItems.map(item => (
+              <span key={item} className="marquee__item">{item}</span>
             ))}
           </div>
+        ))}
+      </div>
 
-          <div style={{ textAlign: 'center', marginTop: 'clamp(2rem, 5vw, 3rem)' }}>
-            <Link to="/services" style={{
-              background: 'transparent', 
-              color: 'var(--accent)',
-              border: '1px solid var(--accent)', 
-              fontWeight: 600,
-              padding: 'clamp(0.7rem, 1.5vw, 0.9rem) clamp(1.5rem, 3vw, 2.5rem)', 
-              borderRadius: 10,
-              letterSpacing: '0.08em', 
-              display: 'inline-block', 
-              fontSize: 'clamp(0.9rem, 1.3vw, 1.05rem)',
-              transition: 'var(--transition)',
-            }}>
-              VIEW ALL SERVICES →
-            </Link>
-          </div>
+      {/* ============ SERVICES HIGHLIGHTS ============ */}
+      <section className="section" aria-labelledby="core-services">
+        <div className="container">
+          <Reveal style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 5vw, 4rem)' }}>
+            <span className="tech-label tech-label--center">What we do</span>
+            <h2 id="core-services" className="display display-lg" style={{ marginTop: '0.8rem' }}>
+              OUR CORE <span className="text-molten">SERVICES</span>
+            </h2>
+          </Reveal>
+
+          <Reveal stagger className="card-grid">
+            {highlights.map(h => (
+              <TiltCard key={h.title} style={{ padding: 'var(--space-card)' }}>
+                <div className="icon-forge" style={{ marginBottom: '1.2rem' }}>
+                  <h.icon size={26} strokeWidth={1.5} aria-hidden="true" />
+                </div>
+                <h3 className="display display-sm" style={{ marginBottom: '0.5rem' }}>{h.title}</h3>
+                <p style={{ color: 'var(--muted)', fontSize: '0.95rem', lineHeight: 1.7 }}>{h.desc}</p>
+              </TiltCard>
+            ))}
+          </Reveal>
+
+          <Reveal style={{ textAlign: 'center', marginTop: 'clamp(2.5rem, 5vw, 3.5rem)' }}>
+            <MagneticButton to="/services" variant="ghost">
+              View All Services <ArrowRight size={15} aria-hidden="true" />
+            </MagneticButton>
+          </Reveal>
         </div>
       </section>
 
-      {/* Videos Section */}
-      <section style={{ 
-        padding: 'clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 2rem)',
-        background: 'var(--surface)' 
-      }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ 
-            textAlign: 'center', 
-            marginBottom: 'clamp(2rem, 5vw, 4rem)' 
-          }}>
-            <p style={{ 
-              color: 'var(--accent)', 
-              fontWeight: 600, 
-              letterSpacing: '0.15em', 
-              fontSize: 'clamp(0.8rem, 1.3vw, 0.95rem)', 
-              marginBottom: '0.5rem' 
-            }}>
-              OUR WORK IN ACTION
-            </p>
-            <h2 style={{
-              fontFamily: 'var(--font-display)', 
-              fontSize: 'clamp(1.5rem, 5vw, 3.5rem)',
-              letterSpacing: '0.05em',
-            }}>
-              FEATURED VIDEOS
+      {/* ============ VIDEOS ============ */}
+      <section className="section" style={{ background: 'var(--bg-raised)' }} aria-labelledby="featured-videos">
+        <div className="container">
+          <Reveal style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 5vw, 4rem)' }}>
+            <span className="tech-label tech-label--center">Our work in action</span>
+            <h2 id="featured-videos" className="display display-lg" style={{ marginTop: '0.8rem' }}>
+              FEATURED <span className="text-molten">FOOTAGE</span>
             </h2>
-          </div>
+          </Reveal>
 
-          <div style={{
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(280px, 45vw, 400px), 1fr))',
-            gap: 'clamp(1rem, 2vw, 2rem)',
-          }}>
+          <div
+            className="card-grid"
+            style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))' }}
+          >
             {videos.map((video, i) => (
-              <div key={video.title} style={{
-                background: 'var(--bg)', 
-                border: '1px solid var(--border)',
-                borderRadius: 'var(--radius)', 
-                padding: 'clamp(1rem, 2vw, 1.5rem)',
-                overflow: 'hidden',
-                position: 'relative',
-                transition: 'var(--transition)',
-                animationDelay: `${i * 0.1}s`,
-              }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
-                  (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)';
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)';
-                  (e.currentTarget as HTMLElement).style.transform = 'none';
-                }}>
-                <h3 style={{ 
-                  fontFamily: 'var(--font-display)', 
-                  fontSize: 'clamp(1rem, 1.8vw, 1.3rem)', 
-                  letterSpacing: '0.05em', 
-                  marginBottom: 'clamp(0.75rem, 1.5vw, 1rem)' 
-                }}>
-                  {video.title}
-                </h3>
-                <div style={{
-                  position: 'relative',
-                  width: '100%',
-                  height: 'clamp(200px, 30vw, 250px)',
-                  marginBottom: 'clamp(0.75rem, 1.5vw, 1rem)',
-                  borderRadius: 8,
-                  overflow: 'hidden',
-                  background: 'black',
-                }}>
-                  {video.localSrc ? (
-                    <video
-                      src={video.localSrc}
-                      controls
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                      }}
-                    />
-                  ) : video.embedUrl ? (
-                    <iframe
-                      src={video.embedUrl}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        border: 'none',
-                        borderRadius: 8,
-                      }}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      title={video.title}
-                    />
-                  ) : (
-                    <div style={{
-                      width: '100%',
-                      height: '100%',
-                      display: 'grid',
-                      placeItems: 'center',
-                      color: 'var(--muted)',
-                      background: 'rgba(0, 0, 0, 0.08)',
-                    }}>
-                      No preview available
-                    </div>
-                  )}
+              <TiltCard key={video.title + i} max={3} style={{ padding: 'clamp(1rem, 2vw, 1.4rem)' }}>
+                <Reveal kind="mask" delay={i * 0.08} className="video-frame" style={{ aspectRatio: '4 / 3', marginBottom: '1rem' }}>
+                  <video src={video.src} controls preload="metadata" aria-label={video.title} />
+                </Reveal>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.8rem', flexWrap: 'wrap' }}>
+                  <h3 className="display display-sm">{video.title}</h3>
+                  <a
+                    href={TIKTOK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="chip"
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em' }}
+                  >
+                    TikTok <ArrowRight size={12} aria-hidden="true" />
+                  </a>
                 </div>
-                <a 
-                  href={video.tiktokUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  style={{
-                    background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
-                    color: '#000',
-                    fontWeight: 600,
-                    padding: 'clamp(0.5rem, 1vw, 0.7rem) clamp(1rem, 2vw, 1.5rem)',
-                    borderRadius: 8,
-                    fontSize: 'clamp(0.85rem, 1.2vw, 0.95rem)',
-                    letterSpacing: '0.05em',
-                    display: 'inline-block',
-                    textDecoration: 'none',
-                    transition: 'var(--transition)',
-                  }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLElement).style.transform = 'scale(1.05)';
-                  }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
-                  }}
-                >
-                  Watch on TikTok →
-                </a>
-              </div>
+              </TiltCard>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Banner */}
-      <section style={{
-        padding: 'clamp(2.5rem, 6vw, 5rem) clamp(1rem, 5vw, 2rem)',
-        background: 'linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%)',
-        borderTop: '1px solid var(--border)', 
-        borderBottom: '1px solid var(--border)',
-      }}>
-        <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{
-            fontFamily: 'var(--font-display)', 
-            fontSize: 'clamp(1.4rem, 4vw, 3rem)',
-            letterSpacing: '0.05em', 
-            marginBottom: 'clamp(0.75rem, 1.5vw, 1rem)',
-          }}>
+      {/* ============ CTA ============ */}
+      <section className="section" aria-labelledby="cta-heading" style={{ overflow: 'hidden' }}>
+        <div className="hero__rays" aria-hidden="true" style={{ top: '-40%' }} />
+        <div className="container" style={{ position: 'relative', textAlign: 'center', maxWidth: 820 }}>
+          <Reveal as="h2" kind="chars" className="display display-lg" style={{ marginBottom: '1rem' }}>
             READY TO START YOUR PROJECT?
-          </h2>
-          <p style={{ 
-            color: 'var(--muted)', 
-            marginBottom: 'clamp(1.5rem, 2.5vw, 2rem)', 
-            fontSize: 'clamp(1rem, 1.5vw, 1.15rem)' 
-          }}>
+          </Reveal>
+          <Reveal as="p" delay={0.15} className="lead" style={{ marginBottom: '2.2rem' }}>
             Talk to our team today and let's bring your vision to life.
-          </p>
-          <Link to="/contact" style={{
-            background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
-            color: '#000', 
-            fontWeight: 700, 
-            padding: 'clamp(0.7rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2.5rem)',
-            borderRadius: 10, 
-            fontSize: 'clamp(0.9rem, 1.3vw, 1.1rem)', 
-            letterSpacing: '0.08em',
-            display: 'inline-block',
-            transition: 'var(--transition)',
-          }}>
-            CONTACT US TODAY
-          </Link>
+          </Reveal>
+          <Reveal delay={0.3}>
+            <MagneticButton to="/contact" variant="forge">
+              Contact Us Today <ArrowRight size={16} aria-hidden="true" />
+            </MagneticButton>
+          </Reveal>
         </div>
       </section>
     </main>
