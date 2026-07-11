@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
-import { ArrowRight } from 'lucide-react';
 import { setCanonicalURL } from '../utils/canonical';
 import Reveal from '../component/fx/Reveal';
 import TiltCard from '../component/fx/TiltCard';
-import MagneticButton from '../component/fx/Magnetic';
 import cctvImg from '../assets/cctv.png';
 import civilImg from '../assets/civil.png';
 import fencingImg from '../assets/fencing.png';
@@ -142,13 +140,8 @@ export default function Services() {
           <Reveal as="h2" kind="chars" id="services-cta" className="display display-lg" style={{ marginBottom: '1rem' }}>
             NEED SOMETHING SPECIFIC?
           </Reveal>
-          <Reveal as="p" delay={0.15} className="lead" style={{ marginBottom: '2.2rem' }}>
+          <Reveal as="p" delay={0.15} className="lead">
             Every project is different. Tell us what you're building and we'll scope it with you.
-          </Reveal>
-          <Reveal delay={0.3}>
-            <MagneticButton to="/contact" variant="forge">
-              Request a Quote <ArrowRight size={16} aria-hidden="true" />
-            </MagneticButton>
           </Reveal>
         </div>
       </section>

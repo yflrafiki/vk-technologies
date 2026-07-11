@@ -9,16 +9,10 @@ const links = [
   { to: '/contact', label: 'Contact' },
 ];
 
-const getTimeTheme = () => {
-  const hour = new Date().getHours();
-  return hour >= 6 && hour < 18 ? 'light' : 'dark';
-};
-
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>(getTimeTheme);
   const lastY = useRef(0);
   const location = useLocation();
 
@@ -41,16 +35,6 @@ export default function Navbar() {
       window.removeEventListener('scroll', onScroll);
       cancelAnimationFrame(raf);
     };
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.classList.remove('light', 'dark');
-    document.documentElement.classList.add(theme);
-  }, [theme]);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => setTheme(getTimeTheme()), 60_000);
-    return () => window.clearInterval(interval);
   }, []);
 
   // lock body scroll while the mobile menu is open
