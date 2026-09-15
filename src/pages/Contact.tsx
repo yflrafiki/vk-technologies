@@ -8,10 +8,10 @@ import MagneticButton from '../component/fx/Magnetic';
 const contactRows = [
   { icon: MapPin, label: 'Location', value: 'Accra, Greater Accra Region, Ghana' },
   { icon: Building2, label: 'Address', value: 'CJ 233, Koney Rambo Street, GD - 131 - 8189' },
-  { icon: Phone, label: 'Phone', value: '+233 24 4657 280 / +233 54 9266 505' },
+  { icon: Phone, label: 'Phone', value: '+233 24 4657 280 / +233 54 9266 505 / +233 59 348 9680' },
   { icon: MessageSquare, label: 'Whatsapp', value: '+233 24 4657 280' },
   { icon: Mail, label: 'Email', value: 'zivengineeringtechsolutions@gmail.com' },
-  { icon: Clock, label: 'Working Hours', value: 'Monday – Saturday: 8:00 AM – 6:00 PM' },
+  { icon: Clock, label: 'Working Hours', value: 'Monday – Saturday: 8:00 AM – 5:30 PM' },
 ];
 
 const serviceOptions = [
