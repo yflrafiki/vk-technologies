@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { setCanonicalURL } from '../utils/canonical';
 import Reveal from '../component/fx/Reveal';
-import TiltCard from '../component/fx/TiltCard';
 import cctvImg from '../assets/cctv.png';
 import civilImg from '../assets/civil.png';
 import fencingImg from '../assets/fencing.png';
@@ -86,63 +85,73 @@ const services = [
 export default function Services() {
   useEffect(() => { setCanonicalURL('/services'); }, []);
 
+  const num = (i: number) => String(i + 1).padStart(2, '0');
+
   return (
-    <main className="page-enter" style={{ paddingTop: 76 }}>
-      {/* ============ HERO ============ */}
-      <section className="section" style={{ overflow: 'hidden', paddingBottom: 'clamp(3rem, 6vw, 5rem)' }} aria-labelledby="services-heading">
-        <div className="hero__grid" aria-hidden="true" />
-        <div className="hero__rays" aria-hidden="true" style={{ top: '-45%' }} />
-        <div className="container" style={{ position: 'relative', textAlign: 'center', maxWidth: 860 }}>
-          <Reveal>
-            <span className="tech-label tech-label--center">What we offer</span>
-          </Reveal>
-          <Reveal as="h1" kind="chars" delay={0.12} id="services-heading" className="display display-xl" style={{ margin: 'clamp(0.8rem, 2vw, 1.4rem) 0' }}>
-            PRECISION IN EVERY TRADE
-          </Reveal>
-          <Reveal as="p" delay={0.35} className="lead">
-            Eleven specialized disciplines, one accountable team. Engineering, construction,
-            and technology services — all under one roof.
-          </Reveal>
+    <main>
+      {/* ============ HEAD ============ */}
+      <header className="page-head">
+        <div className="container">
+          <div className="page-head__inner">
+            <span className="eyebrow">What we offer</span>
+            <h1 id="services-heading" className="h1">PRECISION IN EVERY TRADE</h1>
+            <p className="lead">
+              Eleven specialized disciplines, one accountable team. Engineering, construction,
+              and technology services — all under one roof.
+            </p>
+          </div>
+        </div>
+      </header>
+
+      {/* ============ SERVICES ============ */}
+      <section className="svc" aria-labelledby="services-heading">
+        <div className="container grid-12">
+          <nav className="svc__index" aria-label="Services on this page">
+            <span className="eyebrow" style={{ marginBottom: 'var(--s-3)' }}>Index</span>
+            <ol>
+              {services.map((s, i) => (
+                <li key={s.title}>
+                  <a href={`#service-${num(i)}`}>
+                    <span className="n">{num(i)}</span>
+                    <span>{s.title}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+
+          <div className="svc__list">
+            {services.map((s, i) => (
+              <article key={s.title} id={`service-${num(i)}`} className="svc-entry" aria-labelledby={`service-${num(i)}-title`}>
+                <Reveal className="svc-entry__head">
+                  <span className="n">{num(i)} / {String(services.length).padStart(2, '0')}</span>
+                  <h2 id={`service-${num(i)}-title`} className="h3">{s.title}</h2>
+                </Reveal>
+                <div className="svc-entry__body">
+                  <div className="svc-entry__img">
+                    <img src={s.image} alt={s.title} loading="lazy" />
+                  </div>
+                  <div>
+                    <p>{s.desc}</p>
+                    <span className="eyebrow scope__title">Scope</span>
+                    <ul className="scope">
+                      {s.items.map(item => <li key={item}>{item}</li>)}
+                    </ul>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ============ SERVICES GRID ============ */}
-      <section className="section" style={{ paddingTop: 'clamp(1rem, 3vw, 2rem)' }}>
-        <div
-          className="container card-grid"
-          style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 'clamp(1.25rem, 2.5vw, 2rem)' }}
-        >
-          {services.map((s, i) => (
-            <TiltCard key={s.title} max={3} style={{ padding: 'clamp(1.1rem, 2vw, 1.6rem)', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ fontFamily: 'var(--font-tech)', fontSize: '0.68rem', letterSpacing: '0.24em', color: 'var(--muted)', marginBottom: '0.9rem' }}>
-                {String(i + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')}
-              </div>
-              <Reveal kind="mask" delay={(i % 3) * 0.08} style={{ aspectRatio: '16 / 10', marginBottom: '1.2rem' }}>
-                <img src={s.image} alt={s.title} loading="lazy" />
-              </Reveal>
-              <h2 className="display display-sm" style={{ marginBottom: '0.6rem' }}>{s.title}</h2>
-              <p style={{ color: 'var(--muted)', fontSize: '0.93rem', lineHeight: 1.65, marginBottom: '1.1rem', flex: 1 }}>
-                {s.desc}
-              </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
-                {s.items.map(item => (
-                  <span key={item} className="chip">{item}</span>
-                ))}
-              </div>
-            </TiltCard>
-          ))}
-        </div>
-      </section>
-
-      {/* ============ CTA ============ */}
-      <section className="section" style={{ background: 'var(--bg-raised)', textAlign: 'center' }} aria-labelledby="services-cta">
-        <div className="container" style={{ maxWidth: 760 }}>
-          <Reveal as="h2" kind="chars" id="services-cta" className="display display-lg" style={{ marginBottom: '1rem' }}>
-            NEED SOMETHING SPECIFIC?
-          </Reveal>
-          <Reveal as="p" delay={0.15} className="lead">
+      {/* ============ NOTE ============ */}
+      <section className="svc-note" aria-labelledby="services-cta">
+        <div className="container grid-12 svc-note__inner">
+          <h2 id="services-cta" className="h2">NEED SOMETHING SPECIFIC?</h2>
+          <p className="lead">
             Every project is different. Tell us what you're building and we'll scope it with you.
-          </Reveal>
+          </p>
         </div>
       </section>
     </main>

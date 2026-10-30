@@ -5,25 +5,23 @@ type RevealKind = 'rise' | 'mask' | 'chars';
 
 interface RevealProps {
   children: ReactNode;
+  /** kept for call-site compatibility; every kind now uses the same fade */
   kind?: RevealKind;
   delay?: number;
   className?: string;
   style?: CSSProperties;
   id?: string;
-  as?: 'div' | 'section' | 'h1' | 'h2' | 'h3' | 'p' | 'span';
-  /** stagger children instead of animating the wrapper (for grids) */
+  as?: 'div' | 'section' | 'h1' | 'h2' | 'h3' | 'p' | 'span' | 'ul' | 'ol' | 'dl';
+  /** stagger children instead of animating the wrapper (for lists) */
   stagger?: boolean;
 }
 
 /**
- * Scroll-triggered entrance. Three kinds:
- *  - rise:  translate up + fade (default, blocks of content)
- *  - mask:  clip-path wipe + scale + blur-to-sharp (images)
- *  - chars: per-word rise for display headlines
- * Animates once, on 85% viewport entry, expo-out.
+ * Scroll-triggered entrance: a short 12px fade-up, once, at 90% viewport
+ * entry. Skipped entirely under reduced motion.
  */
 export default function Reveal({
-  children, kind = 'rise', delay = 0, className = '', style, id, as = 'div', stagger = false,
+  children, delay = 0, className = '', style, id, as = 'div', stagger = false,
 }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
 
@@ -32,66 +30,20 @@ export default function Reveal({
     if (!el || prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      const trigger = {
-        trigger: el,
-        start: 'top 85%',
-        once: true,
-      };
+      const scrollTrigger = { trigger: el, start: 'top 90%', once: true };
+      const from = { y: 12, opacity: 0 };
+      const to = { y: 0, opacity: 1, duration: 0.35, delay, ease: 'power2.out', scrollTrigger };
 
-      if (kind === 'mask') {
-        gsap.fromTo(el,
-          { clipPath: 'inset(0 0 100% 0)', opacity: 1 },
-          { clipPath: 'inset(0 0 0% 0)', duration: 1.1, delay, ease: 'expo.out', scrollTrigger: trigger },
-        );
-        const img = el.querySelector('img, video');
-        if (img) {
-          gsap.fromTo(img,
-            { scale: 1.25, filter: 'blur(14px)' },
-            {
-              scale: 1, filter: 'blur(0px)', duration: 1.4, delay, ease: 'expo.out', scrollTrigger: trigger,
-              onComplete: () => gsap.set(img, { clearProps: 'filter,scale' }),
-            },
-          );
-        }
-      } else if (kind === 'chars') {
-        // split into words (word-level keeps layout stable + screen-reader safe via aria)
-        const text = el.textContent ?? '';
-        el.setAttribute('aria-label', text);
-        el.innerHTML = text
-          .split(/\s+/)
-          .filter(Boolean)
-          .map(w => `<span aria-hidden="true" style="display:inline-block;overflow:hidden;vertical-align:bottom;"><span style="display:inline-block;">${w}</span></span>`)
-          .join(' ');
+      if (stagger) {
         gsap.set(el, { opacity: 1 });
-        gsap.from(el.querySelectorAll(':scope > span > span'), {
-          yPercent: 110,
-          duration: 1,
-          delay,
-          ease: 'expo.out',
-          stagger: 0.06,
-          scrollTrigger: trigger,
-        });
-      } else if (stagger) {
-        gsap.set(el, { opacity: 1 });
-        gsap.from(el.children, {
-          y: 44,
-          opacity: 0,
-          duration: 1,
-          delay,
-          ease: 'expo.out',
-          stagger: 0.09,
-          scrollTrigger: trigger,
-        });
+        gsap.fromTo(el.children, from, { ...to, stagger: 0.04 });
       } else {
-        gsap.fromTo(el,
-          { y: 44, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1, delay, ease: 'expo.out', scrollTrigger: trigger },
-        );
+        gsap.fromTo(el, from, to);
       }
     }, el);
 
     return () => ctx.revert();
-  }, [kind, delay, stagger]);
+  }, [delay, stagger]);
 
   const Tag = as;
   return (
@@ -99,7 +51,7 @@ export default function Reveal({
       // @ts-expect-error dynamic tag ref
       ref={ref}
       id={id}
-      className={`gs-reveal ${kind === 'mask' ? 'img-reveal' : ''} ${className}`.trim()}
+      className={`gs-reveal ${className}`.trim()}
       style={style}
     >
       {children}
